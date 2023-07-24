@@ -16,6 +16,61 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 17.20.00.04
+* ##### New Features/Functionality
+  * teradataml is now compatible with SQLAlchemy 2.0.X
+    * **Important notes** when user has sqlalchemy version >= 2.0: 
+      * Users will not be able to run the `execute()` method on SQLAlchemy engine object returned by 
+        `get_context()` and `create_context()` teradataml functions. This is due to the SQLAlchemy has
+        removed the support for `execute()` method on the engine object. Thus, user scripts where 
+        `get_context().execute()` and `create_context().execute()`, is used, Teradata recommends to
+        replace those with either `execute_sql()` function exposed by teradataml or `exec_driver_sql()` 
+        method on the `Connection` object returned by `get_connection()` function in teradataml.
+      * Now `get_connection().execute()` accepts only executable sqlalchemy object. Refer to 
+        `sqlalchemy.engine.base.execute()` for more details.
+      * Teradata recommends to use either `execute_sql()` function exposed by teradataml or 
+        `exec_driver_sql()` method on the `Connection` object returned by `get_connection()` 
+        function in teradataml, in such cases.
+  * New utility function `execute_sql()` is added to execute the SQL.  
+  * Extending compatibility for MAC with ARM processors.
+  * Added support for floor division (//) between two teradataml DataFrame Columns.
+  * Analytics Database Analytic Functions:
+    * `GLMPerSegment()`
+    * `GLMPredictPerSegment()`
+    * `OneClassSVM()`
+    * `OneClassSVMPredict()`
+    * `SVM()`
+    * `SVMPredict()`
+    * `TargetEncodingFit()`
+    * `TargetEncodingTransform()`
+    * `TrainTestSplit()`
+    * `WordEmbeddings()`
+    * `XGBoost()`
+    * `XGBoostPredict()`
+    
+  * ###### teradataml Options
+    * Display Options
+      * `display.geometry_column_length`
+        Option to display the default length of geometry column in GeoDataFrame.
+        
+  * ##### Updates
+    * `set_auth_token()` function can generate the client id automatically based on org_id when user do not specify it.
+    * Analytics Database Analytic Functions:
+      * `ColumnTransformer()` 
+          * Does not allow list values for arguments - `onehotencoding_fit_data` and `ordinalencoding_fit_data`.
+      * `OrdidnalEncodingFit()`
+          * New arguments added - `category_data`, `target_column_names`, `categories_column`, `ordinal_values_column`.
+          * Allows the list of values for arguments - `target_column`, `start_value`, `default_value`.
+      * `OneHotEncodingFit()`
+          * New arguments added - `category_data`, `approach`, `target_columns`, `categories_column`, `category_counts`.
+          * Allows the list of values for arguments - `target_column`, `other_column`.
+
+  * ##### Bug Fixes
+    * `DataFrame.sample()` method output is now deterministic.
+    * `copy_to_sql()` now preserves the rows of the table even when the view content is copied to the same table name.
+    * `list_user_envs()` does not raise warning when no user environments found.
+
+## Release Notes:
 #### teradataml 17.20.00.03
 
   * ##### Updates
