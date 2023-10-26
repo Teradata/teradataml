@@ -16,6 +16,208 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 17.20.00.05
+* ##### New Features/Functionality
+  * ###### teradataml: Hyperparameter-Tuning - Technique to identify best model parameters.
+    Hyperparameter tuning is an optimization method to determine the optimal set of 
+    hyperparameters for the given dataset and learning model. teradataml hyperparameter tuning feature
+    offers best model identification, parallel execution, early stopping feature, best data identification, 
+    model evaluation, model prediction, live logging, input data hyper-parameterization, input data sampling, 
+    numerous scoring functions, hyper-parameterization for non-model trainer functions.  
+    * `GridSearch`
+      GridSearch is an exhaustive search algorithm that covers all possible
+      parameter values to identify optimal hyperparameters.
+      * Methods of GridSearch
+        * `__init__()` - Instantiate an object of GridSearch for given model function and parameters.
+        * `evaluate()` - Function to perform evaluation on the given teradataml DataFrame using default model.
+        * `fit()` - Function to perform hyperparameter-tuning for given hyperparameters and model on teradataml DataFrame.
+        * `get_error_log()` - Useful to get the error log if model execution failed, using the model identifier.
+        * `get_input_data()` - Useful to get the input data using the data identifier, when input data is also parameterized.
+        * `get_model()` - Returns the trained model for the given model identifier.
+        * `get_parameter_grid()` - Returns the hyperparameter space used for hyperparameter optimization.
+        * `is_running()` - Returns the execution status of hyperaparameter tuning.
+        * `predict()` - Function to perform prediction on the given teradataml DataFrame using default model.
+        * `set_model()` -  Function to update the default model.
+      * Properties of GridSearch
+        * `best_data_id` - Returns the best data identifier used for model training.
+        * `best_model` - Returns the best trained model.
+        * `best_model_id` - Returns the identifier for best model.
+        * `best_params_` - Returns the best set of hyperparameter.
+        * `best_sampled_data_` - Returns the best sampled data used to train the best model.
+        * `best_score_` - Returns the best trained model score.
+        * `model_stats` - Returns the model evaluation reports.
+        * `models` - Returns the metadata of all the models.
+    * `RandomSearch`
+      RandomSearch algorithm performs random sampling on hyperparameter 
+      space to identify optimal hyperparameters.
+      * Methods of RandomSearch
+        * `__init__()` - Instantiate an object of RandomSearch for given model function and parameters.
+        * `evaluate()` - Function to perform evaluation on the given teradataml DataFrame using default model.
+        * `fit()` - Function to perform hyperparameter-tuning for given hyperparameters and model on teradataml DataFrame.
+        * `get_error_log()` - Useful to get the error log if model execution failed, using the model identifier.
+        * `get_input_data()` - Useful to get the input data using the data identifier, when input data is also parameterized.
+        * `get_model()` - Returns the trained model for the given model identifier.
+        * `get_parameter_grid()` - Returns the hyperparameter space used for hyperparameter optimization.
+        * `is_running()` - Returns the execution status of hyperaparameter tuning.
+        * `predict()` - Function to perform prediction on the given teradataml DataFrame using default model.
+        * `set_model()` - Function to update the default model.
+      * Properties of GridSearch    
+        * `best_data_id` - Returns the best data identifier used for model training.
+        * `best_model` - Returns the best trained model.
+        * `best_model_id` - Returns the identifier for best model.
+        * `best_params_` - Returns the best set of hyperparameter.
+        * `best_sampled_data_` - Returns the best sampled data used to train the best model.
+        * `best_score_` - Returns the best trained model score.
+        * `model_stats` - Returns the model evaluation reports.
+        * `models` - Returns the metadata of all the models.
+
+  * ###### teradataml: DataFrame
+    * New Functions
+      * `DataFrame.plot()` - Generates the below type of plots on teradataml DataFrame.
+        * line - Generates line plot.
+        * bar - Generates bar plot.
+        * scatter - Generates scatter plot.
+        * corr - Generates correlation plot.
+        * wiggle - Generates a wiggle plot.
+        * mesh - Generates a mesh plot.
+      * `DataFrame.itertuples()` - iterate over teradataml DataFrame rows as namedtuples or list.
+  * ###### teradataml: GeoDataFrame
+    * New Functions
+      * `GeoDataFrame.plot()` - Generate the below type of plots on teradataml GeoDataFrame.
+        * line - Generates line plot.
+        * bar - Generates bar plot.
+        * scatter - Generates scatter plot.
+        * corr - Generates correlation plot.
+        * wiggle - Generates a wiggle plot.
+        * mesh - Generates a mesh plot.
+        * geometry - Generates plot on geospatial data. 
+  * Plot:
+    * `Axis` - Genertes the axis for plot.
+    * `Figure` - Generates the figure for plot.
+    * `subplots` - Helps in generating multiple plots on a single `Figure`.    
+  * Bring Your Own Model (BYOM) Function:
+    * `DataikuPredict` - Score the data in Vantage using the model trained externally in Dataiku UI and stored in Vantage.
+  * `async_run_status()` - Function to check the status of asynchronous run(s) using unique run id(s).
+  
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * _Regular Arithmetic Functions_
+      * `DataFrameColumn.abs()` - Computes the absolute value.
+      * `DataFrameColumn.ceil()` - Returns the ceiling value of the column.
+      * `DataFrameColumn.ceiling()` - It is an alias for `DataFrameColumn.ceil()` function.
+      * `DataFrameColumn.degrees()` - Converts radians value from the column to degrees.
+      * `DataFrameColumn.exp()` - Raises e (the base of natural logarithms) to the power of the value in the column, where e = 2.71828182845905.
+      * `DataFrameColumn.floor()` - Returns the largest integer equal to or less than the value in the column.
+      * `DataFrameColumn.ln()` - Computes the natural logarithm of values in column.
+      * `DataFrameColumn.log10()` - Computes the base 10 logarithm.
+      * `DataFrameColumn.mod()` - Returns the modulus of the column.
+      * `DataFrameColumn.pmod()` - It is an alias for `DataFrameColumn.mod()` function.
+      * `DataFrameColumn.nullifzero()` - Converts data from zero to null to avoid problems with division by zero.
+      * `DataFrameColumn.pow()` - Computes the power of the column raised to expression or constant.
+      * `DataFrameColumn.power()` - It is an alias for `DataFrameColumn.pow()` function.
+      * `DataFrameColumn.radians()` - Converts degree value from the column to radians.
+      * `DataFrameColumn.round()` - Returns the rounded off value.
+      * `DataFrameColumn.sign()` - Returns the sign.
+      * `DataFrameColumn.signum()` - It is an alias for `DataFrameColumn.sign()` function.
+      * `DataFrameColumn.sqrt()` - Computes the square root of values in the column.
+      * `DataFrameColumn.trunc()` - Provides the truncated value of columns.
+      * `DataFrameColumn.width_bucket()` - Returns the number of the partition to which column is assigned.
+      * `DataFrameColumn.zeroifnull()` - Converts data from null to zero to avoid problems with null.
+    * _Trigonometric Functions_
+      * `DataFrameColumn.acos()` - Returns the arc-cosine value.
+      * `DataFrameColumn.asin()` - Returns the arc-sine value.
+      * `DataFrameColumn.atan()` - Returns the arc-tangent value.
+      * `DataFrameColumn.atan2()` - Returns the arc-tangent value based on x and y coordinates.
+      * `DataFrameColumn.cos()` - Returns the cosine value.
+      * `DataFrameColumn.sin()` - Returns the sine value.
+      * `DataFrameColumn.tan()` - Returns the tangent value.
+    * _Hyperbolic Functions_
+      * `DataFrameColumn.acosh()` - Returns the inverse hyperbolic cosine value. 
+      * `DataFrameColumn.asinh()` - Returns the inverse hyperbolic sine value.
+      * `DataFrameColumn.atanh()` - Returns the inverse hyperbolic tangent value.
+      * `DataFrameColumn.cosh()` - Returns the hyperbolic cosine value.
+      * `DataFrameColumn.sinh()` - Returns the hyperbolic sine value
+      * `DataFrameColumn.tanh()` - Returns the hyperbolic tangent value.
+    * _String Functions_
+      * `DataFrameColumn.ascii()` - Returns the decimal representation of the first character in column.
+      * `DataFrameColumn.char2hexint()` - Returns the hexadecimal representation for a character string in a column.
+      * `DataFrameColumn.chr()` - Returns the Latin ASCII character of a given a numeric code value in column.
+      * `DataFrameColumn.char()` - It is an alias for `DataFrameColumn.chr()` function.
+      * `DataFrameColumn.character_length()` - Returns the number of characters in the column.
+      * `DataFrameColumn.char_length()` - It is an alias for `DataFrameColumn.character_length()` function.
+      * `DataFrameColumn.edit_distance()` - Returns the minimum number of edit operations required to 
+         transform string in a column into string specified in argument.
+      * `DataFrameColumn.index()` - Returns the position of a string in a column where string specified in argument starts.
+      * `DataFrameColumn.initcap()` - Modifies a string column and returns the string with the first character
+         of each word in uppercase.
+      * `DataFrameColumn.instr()` - Searches the string in a column for occurrences of search string passed as argument.
+      * `DataFrameColumn.lcase()` - Returns a character string identical to string values in column,
+         with all uppercase letters replaced with their lowercase equivalents.
+      * `DataFrameColumn.left()` - Truncates string in a column to a specified number of characters desired from
+         the left side of the string.
+      * `DataFrameColumn.length()` - It is an alias for `DataFrameColumn.character_length()` function.
+      * `DataFrameColumn.levenshtein()` - It is an alias for `DataFrameColumn.edit_distance()` function.
+      * `DataFrameColumn.locate()` - Returns the position of the first occurrence of a string in a column within 
+         string in argument. 
+      * `DataFrameColumn.lower()` - It is an alias for `DataFrameColumn.character_lcase()` function.
+      * `DataFrameColumn.lpad()` - Returns the string in a column padded to the left with the characters specified 
+         in argument so that the resulting string has length specified in argument.
+      * `DataFrameColumn.ltrim()` - Returns the string in a column, with its left-most characters removed up
+        to the first character that is not in the string specified in argument.
+      * `DataFrameColumn.ngram()` - Returns the number of n-gram matches between string in a column,
+        and string specified in argument.
+      * `DataFrameColumn.nvp()` - Extracts the value of a name-value pair where the name in the pair matches
+        the name and the number of the occurrence specified.
+      * `DataFrameColumn.oreplace()` - Replaces every occurrence of search string in the column.
+      * `DataFrameColumn.otranslate()` - Returns string in a column with every occurrence of each character in
+         string in argument replaced with the corresponding character in another argument.
+      * `DataFrameColumn.replace()` - It is an alias for `DataFrameColumn.oreplace()` function.
+      * `DataFrameColumn.reverse()` - Returns the reverse of string in column.
+      * `DataFrameColumn.right()` - Truncates input string to a specified number of characters desired from
+         the right side of the string.
+      * `DataFrameColumn.rpad()` - Returns the string in a column padded to the right with the characters specified 
+         in argument so the resulting string has length specified in argument.
+      * `DataFrameColumn.rtrim()` - Returns the string in column, with its right-most characters removed up
+         to the first character that is not in the string specified in argument.
+      * `DataFrameColumn.soundex()` - Returns a character string that represents the Soundex code for
+         string in a column.
+      * `DataFrameColumn.string_cs()` - Returns a heuristically derived integer value that can be used to determine
+         which KANJI1-compatible client character set was used to encode string in a column.
+      * `DataFrameColumn.translate()` - It is an alias for `DataFrameColumn.otranslate()` function.
+      * `DataFrameColumn.upper()` - Returns a character string with all lowercase letters in a column replaced 
+         with their uppercase equivalents.
+
+  * ##### teradataml Options
+    * Configuration Options
+      * `configure.indb_install_location`
+        Specifies the installation location of In-DB Python package.
+  
+* ##### Updates
+  * Open Analytics Framework (OpenAF) APIs:
+    * `set_auth_token()`
+      * `set_auth_token()` does not accept username and password anymore. Instead, function opens up a browser session and user should authenticate in browser.
+      * After token expiry, teradataml will open a browser and user needs to authenticate again.
+      * If client machine does not have browser, then user should copy the URL posted by teradataml and authenticate themselves.
+    * Security fixes - `auth_token` is not set or retrieved from the `configure` option anymore.
+    * Manage all user environments.
+      * `create_env()` - supports creation of R environment.
+      * `remove_env()` - Supports removal of remote R environment.
+      * `remove_all_envs()` - Supports removal of all remote R environments.
+      * `remove_env()` and `remove_all_envs()` supports asynchronous call.
+    * UserEnv Class – Supports managing of R remote environments.
+      * Properties:
+        * `libs` - Supports listing of libraries in R remote environment.
+      * Methods:
+        * `install_lib()` - Supports installing of libraries in remote R environment.
+        * `uninstall_lib()` - Supports uninstalling of libraries in remote R environment.
+        * `update_lib()` - Supports updating of libraries in remote R environment.
+  * Unbounded Array Framework (UAF) Functions:
+    * `ArimaEstimate()`
+        * Added support for `CSS` algorithm via `algorithm` argument.
+
+* ##### Bug Fixes
+    * Installation location of In-DB 2.0.0 package is changed. Script() will now work with both 2.0.0 and previous version.  
+
+## Release Notes:
 #### teradataml 17.20.00.04
 * ##### New Features/Functionality
   * teradataml is now compatible with SQLAlchemy 2.0.X
