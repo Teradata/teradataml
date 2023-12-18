@@ -76,7 +76,7 @@ Copyright 2023, Teradata. All Rights Reserved.
 
 * ###### teradataml: Bring Your Own Model
     * _New Functions_
-      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in datarobot and stored 
+      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in DataRobot and stored 
                                in Vantage.
 
 * ##### Updates
