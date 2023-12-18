@@ -16,6 +16,85 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 17.20.00.06
+* ##### New Features/Functionality
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+      * `ColumnExpression.nulls_first()` - Displays NULL values at first.
+      * `ColumnExpression.nulls_last()` - Displays NULL values at last.
+      * _Bit Byte Manipulation Functions_
+        * `DataFrameColumn.bit_and()` - Returns the logical AND operation on the bits from
+           the column and corresponding bits from the argument.
+        * `DataFrameColumn.bit_get()` - Returns the bit specified by input argument from the column and 
+           returns either 0 or 1 to indicate the value of that bit.
+        * `DataFrameColumn.bit_or()` - Returns the logical OR operation on the bits from the column and 
+           corresponding bits from the argument.
+        * `DataFrameColumn.bit_xor()` - Returns the bitwise XOR operation on the binary representation of the
+           column and corresponding bits from the argument.
+        * `DataFrameColumn.bitand()` - It is an alias for `DataFrameColumn.bit_and()` function.
+        * `DataFrameColumn.bitnot()` - Returns a bitwise complement on the binary representation of the column.
+        * `DataFrameColumn.bitor()` - It is an alias for `DataFrameColumn.bit_or()` function.
+        * `DataFrameColumn.bitwise_not()` - It is an alias for `DataFrameColumn.bitnot()` function.
+        * `DataFrameColumn.bitwiseNOT()` - It is an alias for `DataFrameColumn.bitnot()` function.
+        * `DataFrameColumn.bitxor()` - It is an alias for `DataFrameColumn.bit_xor()` function.
+        * `DataFrameColumn.countset()` - Returns the count of the binary bits within the column that are either set to 1 
+           or set to 0, depending on the input argument value.
+        * `DataFrameColumn.getbit()` - It is an alias for `DataFrameColumn.bit_get()` function.
+        * `DataFrameColumn.rotateleft()` - Returns an expression rotated to the left by the specified number of bits,
+           with the most significant bits wrapping around to the right.
+        * `DataFrameColumn.rotateright()` - Returns an expression rotated to the right by the specified number of bits,
+           with the least significant bits wrapping around to the left.
+        * `DataFrameColumn.setbit()` - Sets the value of the bit specified by input argument to the value
+           of column.
+        * `DataFrameColumn.shiftleft()` - Returns the expression when value in column is shifted by the specified
+           number of bits to the left.
+        * `DataFrameColumn.shiftright()` - Returns the expression when column expression is shifted by the specified
+           number of bits to the right.
+        * `DataFrameColumn.subbitstr()` - Extracts a bit substring from the column expression based on the specified 
+           bit position.
+        * `DataFrameColumn.to_byte()` - Converts a numeric data type to the Vantage byte representation
+          (byte value) of the column expression value.
+      
+      * _Regular Expression Functions_
+        * `DataFrameColumn.regexp_instr()` - Searches string value in column for a match to value specified in argument.
+        * `DataFrameColumn.regexp_replace()` - Replaces the portions of string value in a column that matches the value 
+           specified regex string and replaces with the replace string.
+        * `DataFrameColumn.regexp_similar()` - Compares value in column to value in argument and returns integer value.
+        * `DataFrameColumn.regexp_substr()` - Extracts a substring from column that matches a regular expression 
+           specified in the input argument.
+
+* ###### Open Analytics Framework (OpenAF) APIs:
+    * Manage all user environments.
+      * `create_env()`:
+        * User can create one or more user environments using newly added argument `template` by providing specifications in template json file. New feature allows user to create complete user environment, including file and library installation, in just single function call.
+    * UserEnv Class – Manage individual user environment.
+      * Properties:
+        * `models` - Supports listing of models in user environment.
+      * Methods:
+        * `install_model()` - Install a model in user environment.
+        * `uninstall_model()` - Uninstall a model from user environment.
+        * `snapshot()`- Take the snapshot of the user environment.
+
+* ###### teradataml: Bring Your Own Model
+    * _New Functions_
+      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in DataRobot and stored 
+                               in Vantage.
+
+* ##### Updates
+  * `DataFrame.describe()`
+    * Method now accepts an argument `statistics`, which specifies the aggregate operation to be performed. 
+  * `DataFrame.sort()` 
+    * Method now accepts ColumnExpressions as well.
+    * Enables sorting using NULLS FIRST and NULLS LAST.
+  * `view_log()` downloads the Apply query logs based on query id.
+  * Arguments which accepts floating numbers will accept integers also for `Analytics Database Analytic Functions`.
+  * Argument `ignore_nulls` added to `DataFrame.plot()` to ignore the null values while plotting the data.
+  * `Dataframe.sample()` 
+    * Method supports column stratification. 
+    
+* ##### Bug Fixes
+  * `DataFrameColumn.cast()` accepts all teradatasqlalchemy types.
+  * Minor bug fix related to `DataFrame.merge()`.
+
 #### teradataml 17.20.00.05
 * ##### New Features/Functionality
   * ###### teradataml: Hyperparameter-Tuning - Technique to identify best model parameters.
@@ -70,6 +149,40 @@ Copyright 2023, Teradata. All Rights Reserved.
         * `best_score_` - Returns the best trained model score.
         * `model_stats` - Returns the model evaluation reports.
         * `models` - Returns the metadata of all the models.
+  
+  * ###### teradataml: Analytic Functions
+    teradataml currently has different functions to generate a model, predict, transform and evaluate. All these functions are needed to be invoked individually, i.e., predict(), evaluate(), transform() cannot be invoked using the model trainer function output. Enhancement done to this feature now enables user to invoke these functions as methods of the model trainer function. Below is the list of functions, updated with this enhancement:
+    * Analytics Database Analytic Functions
+      *  `BincodeFit()` - Supports `transform()` method.
+      *  `DecisionForest()` - Supports `predict()`, `evaluate()` methods.
+      *  `Fit()` - Supports `transform()` method. 
+      *  `GLM()` - Supports `predict()`, `evaluate()` methods. 
+      *  `GLMPerSegment()` - Supports `predict()`, `evaluate()` methods. 
+      *  `KMeans()` - Supports `predict()` method.
+      *  `KNN()` - Supports `predict()`, `evaluate()` methods. 
+      *  `NaiveBayesTextClassifierTrainer()` - Supports `predict()`, `evaluate()` methods. 
+      *  `NonLinearCombineFit()` - Supports `transform()` method. 
+      *  `OneClassSVM()` - Supports `predict()` method.
+      *  `OneHotEncodingFit()` - Supports `transform()` method. 
+      *  `OrdinalEncodingFit()` - Supports `transform()` method. 
+      *  `OutlierFilterFit()` - Supports `transform()` method. 
+      *  `PolynomialFeaturesFit()` - Supports `transform()` method. 
+      *  `RandomProjectionFit()` - Supports `transform()` method. 
+      *  `RowNormalizeFit()` - Supports `transform()` method. 
+      *  `ScaleFit()` - Supports `transform()` method. 
+      *  `SimpleImputeFit()` - Supports `transform()` method. 
+      *  `SVM()` - Supports `predict()`, `evaluate()` methods. 
+      *  `TargetEncodingFit()` - Supports `transform()` method. 
+      *  `XGBoost()` - Supports `predict()`, `evaluate()` methods. 
+    * Time Series Analytic (UAF) Functions
+      *  `ArimaEstimate()` - Supports `forecast()`, `validate()` methods.
+      *  `DFFT()` - Supports `convolve()`, `inverse()` methods. 
+      *  `IDFFT()` - Supports `inverse()` method. 
+      *  `DFFT2()` - Supports `convolve()`, `inverse()` methods. 
+      *  `IDFFT2()` - Supports `inverse()` method. 
+      *  `DIFF()` - Supports `inverse()` method. 
+      *  `UNDIFF()` - Supports `inverse()` method. 
+      *  `SeasonalNormalize()` - Supports `inverse()` method.
 
   * ###### teradataml: DataFrame
     * New Functions
