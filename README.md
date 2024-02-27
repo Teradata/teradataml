@@ -16,51 +16,132 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 20.00.00.00
+* ##### New Features/Functionality
+    * ###### teradataml: DataFrame
+    * Data Manipulation
+        * `cube()`- Analyzes data by grouping it into multiple dimensions.
+        * `rollup()` - Analyzes a set of data across a single dimension with more than one level of detail.
+        * `replace()` - Replaces the values for columns.
+    
+* ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * _Date Time Functions_
+      * `DataFrameColumn.week_start()` - Returns the first date or timestamp of the week that begins immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_begin()` - It is an alias for `DataFrameColumn.week_start()` function.
+      * `DataFrameColumn.week_end()` - Returns the last date or timestamp of the week that ends immediately after the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_start()` - Returns the first date or timestamp of the month that begins immediately before the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.month_begin()` - It is an alias for `DataFrameColumn.month_start()` function.
+      * `DataFrameColumn.month_end()` - Returns the last date or timestamp of the month that ends immediately after the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.year_start()` - Returns the first date or timestamp of the year that begins immediately before the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.year_begin()` - It is an alias for `DataFrameColumn.year_start()` function.
+      * `DataFrameColumn.year_end()` - Returns the last date or timestamp of the year that ends immediately after the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.quarter_start()` - Returns the first date or timestamp of the quarter that begins immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_begin()` - It is an alias for `DataFrameColumn.quarter_start()` function.
+      * `DataFrameColumn.quarter_end()` - Returns the last date or timestamp of the quarter that ends immediately after the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_sunday()` - Returns the date or timestamp of Sunday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_monday()` - Returns the date or timestamp of Monday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_tuesday()` - Returns the date or timestamp of Tuesday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_wednesday()` - Returns the date or timestamp of Wednesday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_thursday()`- Returns the date or timestamp of Thursday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_friday()` - Returns the date or timestamp of Friday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_saturday()` - Returns the date or timestamp of Saturday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_week()` - Returns the number of days from the beginning of the week to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_month()` - Returns the number of days from the beginning of the month to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_year()` - Returns the number of days from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_calendar()` - Returns the number of days from the beginning of the business calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_month()` - Returns the number of weeks from the beginning of the month to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_quarter()` - Returns the number of weeks from the beginning of the quarter to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_year()` - Returns the number of weeks from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_calendar()` - Returns the number of weeks from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_year()` - Returns the number of months from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_calendar()` - Returns the number of months from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_quarter()` - Returns the number of months from the beginning of the quarter to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_of_year()` - Returns the number of quarters from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_of_calendar()` - Returns the number of quarters from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.year_of_calendar()` - Returns the year of the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_occurence_of_month()` - Returns the nth occurrence of the weekday in the month for the date to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.year()` - Returns the integer value for year in the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month()` - Returns the integer value for month in the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.hour()` - Returns the integer value for hour in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.minute()` - Returns the integer value for minute in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.second()` - Returns the integer value for seconds in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.week()` - Returns the number of weeks from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.next_day()` - Returns the date of the first weekday specified as 'day_value' that is later than the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.months_between()` - Returns the number of months between value in specified date or timestamp value in a column as a literal and date or timestamp value in argument.
+      * `DataFrameColumn.add_months()` - Adds an integer number of months to specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.oadd_months()` - Adds an integer number of months, date or timestamp value in specified date or timestamp value in a column as a literal.
+    * _String Functions_
+      * `DataFrameColumn.concat` - Function to concatenate the columns with a separator.
+      * `DataFrameColumn.like()` - Function to match the string pattern. String match is case sensitive. 
+      * `DataFrameColumn.ilike()` - Function to match the string pattern. String match is not case sensitive.
+      * `DataFrameColumn.substr()` - Returns the substring from a string column.       
+      * `DataFrameColumn.startswith()` - Function to check if the column value starts with the specified value or not.       
+      * `DataFrameColumn.endswith()` - Function to check if the column value ends with the specified value or not.
+    * _Regular Arithmetic Functions_
+      * `DataFrameColumn.cbrt()` - Computes the cube root of values in the column.
+      * `DataFrameColumn.hex()` - Computes the Hexadecimal from decimal for the values in the column.
+      * `DataframeColumn.hypot` - Computes the decimal from Hexadecimal for the values in the column.
+      * `DataFrameColumn.unhex` - computes the hypotenuse for the values between two columns.
+    * _Bit Byte Manipulation Functions_
+      * `DataFrameColumn.from_byte` - Encodes a sequence of bits into a sequence of characters.
+    * _Comparison Functions_
+      * `DataFrameColumn.greatest()` - Returns the greatest values from columns.
+      * `DataFrameColumn.least()` - Returns the least values from columns.
+    * Behaviour of `DataFrameColumn.replace()` is changed.
+    * Behaviour of `DataFrameColumn.to_byte` is changed. It now decodes a sequence of characters in a given encoding into a sequence of bits.
+
+* ##### Bug Fixes
+  * Argument `url_encode` is no longer used in `create_context()` and is deprecated.
+    **Important notes**
+      * Users do not need to encode password even if password contain special characters.
+      * Pass the password to the `create_context()` function argument `password` as it is without changing special characters.
+  * `DataFrame.join()` arguments lsuffix and rsuffix now add suffixes to new column names for join operation.
+  
 #### teradataml 17.20.00.06
 * ##### New Features/Functionality
-  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
-      * `ColumnExpression.nulls_first()` - Displays NULL values at first.
-      * `ColumnExpression.nulls_last()` - Displays NULL values at last.
-      * _Bit Byte Manipulation Functions_
-        * `DataFrameColumn.bit_and()` - Returns the logical AND operation on the bits from
-           the column and corresponding bits from the argument.
-        * `DataFrameColumn.bit_get()` - Returns the bit specified by input argument from the column and 
-           returns either 0 or 1 to indicate the value of that bit.
-        * `DataFrameColumn.bit_or()` - Returns the logical OR operation on the bits from the column and 
-           corresponding bits from the argument.
-        * `DataFrameColumn.bit_xor()` - Returns the bitwise XOR operation on the binary representation of the
-           column and corresponding bits from the argument.
-        * `DataFrameColumn.bitand()` - It is an alias for `DataFrameColumn.bit_and()` function.
-        * `DataFrameColumn.bitnot()` - Returns a bitwise complement on the binary representation of the column.
-        * `DataFrameColumn.bitor()` - It is an alias for `DataFrameColumn.bit_or()` function.
-        * `DataFrameColumn.bitwise_not()` - It is an alias for `DataFrameColumn.bitnot()` function.
-        * `DataFrameColumn.bitwiseNOT()` - It is an alias for `DataFrameColumn.bitnot()` function.
-        * `DataFrameColumn.bitxor()` - It is an alias for `DataFrameColumn.bit_xor()` function.
-        * `DataFrameColumn.countset()` - Returns the count of the binary bits within the column that are either set to 1 
-           or set to 0, depending on the input argument value.
-        * `DataFrameColumn.getbit()` - It is an alias for `DataFrameColumn.bit_get()` function.
-        * `DataFrameColumn.rotateleft()` - Returns an expression rotated to the left by the specified number of bits,
-           with the most significant bits wrapping around to the right.
-        * `DataFrameColumn.rotateright()` - Returns an expression rotated to the right by the specified number of bits,
-           with the least significant bits wrapping around to the left.
-        * `DataFrameColumn.setbit()` - Sets the value of the bit specified by input argument to the value
-           of column.
-        * `DataFrameColumn.shiftleft()` - Returns the expression when value in column is shifted by the specified
-           number of bits to the left.
-        * `DataFrameColumn.shiftright()` - Returns the expression when column expression is shifted by the specified
-           number of bits to the right.
-        * `DataFrameColumn.subbitstr()` - Extracts a bit substring from the column expression based on the specified 
-           bit position.
-        * `DataFrameColumn.to_byte()` - Converts a numeric data type to the Vantage byte representation
-          (byte value) of the column expression value.
+* ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * `ColumnExpression.nulls_first()` - Displays NULL values at first.
+    * `ColumnExpression.nulls_last()` - Displays NULL values at last.
+    * _Bit Byte Manipulation Functions_
+      * `DataFrameColumn.bit_and()` - Returns the logical AND operation on the bits from
+         the column and corresponding bits from the argument.
+      * `DataFrameColumn.bit_get()` - Returns the bit specified by input argument from the column and 
+         returns either 0 or 1 to indicate the value of that bit.
+      * `DataFrameColumn.bit_or()` - Returns the logical OR operation on the bits from the column and 
+         corresponding bits from the argument.
+      * `DataFrameColumn.bit_xor()` - Returns the bitwise XOR operation on the binary representation of the
+         column and corresponding bits from the argument.
+      * `DataFrameColumn.bitand()` - It is an alias for `DataFrameColumn.bit_and()` function.
+      * `DataFrameColumn.bitnot()` - Returns a bitwise complement on the binary representation of the column.
+      * `DataFrameColumn.bitor()` - It is an alias for `DataFrameColumn.bit_or()` function.
+      * `DataFrameColumn.bitwise_not()` - It is an alias for `DataFrameColumn.bitnot()` function.
+      * `DataFrameColumn.bitwiseNOT()` - It is an alias for `DataFrameColumn.bitnot()` function.
+      * `DataFrameColumn.bitxor()` - It is an alias for `DataFrameColumn.bit_xor()` function.
+      * `DataFrameColumn.countset()` - Returns the count of the binary bits within the column that are either set to 1 
+         or set to 0, depending on the input argument value.
+      * `DataFrameColumn.getbit()` - It is an alias for `DataFrameColumn.bit_get()` function.
+      * `DataFrameColumn.rotateleft()` - Returns an expression rotated to the left by the specified number of bits,
+         with the most significant bits wrapping around to the right.
+      * `DataFrameColumn.rotateright()` - Returns an expression rotated to the right by the specified number of bits,
+         with the least significant bits wrapping around to the left.
+      * `DataFrameColumn.setbit()` - Sets the value of the bit specified by input argument to the value
+         of column.
+      * `DataFrameColumn.shiftleft()` - Returns the expression when value in column is shifted by the specified
+         number of bits to the left.
+      * `DataFrameColumn.shiftright()` - Returns the expression when column expression is shifted by the specified
+         number of bits to the right.
+      * `DataFrameColumn.subbitstr()` - Extracts a bit substring from the column expression based on the specified 
+         bit position.
+      * `DataFrameColumn.to_byte()` - Converts a numeric data type to the Vantage byte representation
+        (byte value) of the column expression value.
       
-      * _Regular Expression Functions_
-        * `DataFrameColumn.regexp_instr()` - Searches string value in column for a match to value specified in argument.
-        * `DataFrameColumn.regexp_replace()` - Replaces the portions of string value in a column that matches the value 
-           specified regex string and replaces with the replace string.
-        * `DataFrameColumn.regexp_similar()` - Compares value in column to value in argument and returns integer value.
-        * `DataFrameColumn.regexp_substr()` - Extracts a substring from column that matches a regular expression 
-           specified in the input argument.
+    * _Regular Expression Functions_
+      * `DataFrameColumn.regexp_instr()` - Searches string value in column for a match to value specified in argument.
+      * `DataFrameColumn.regexp_replace()` - Replaces the portions of string value in a column that matches the value 
+         specified regex string and replaces with the replace string.
+      * `DataFrameColumn.regexp_similar()` - Compares value in column to value in argument and returns integer value.
+      * `DataFrameColumn.regexp_substr()` - Extracts a substring from column that matches a regular expression 
+         specified in the input argument.
 
 * ###### Open Analytics Framework (OpenAF) APIs:
     * Manage all user environments.
@@ -76,7 +157,7 @@ Copyright 2023, Teradata. All Rights Reserved.
 
 * ###### teradataml: Bring Your Own Model
     * _New Functions_
-      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in DataRobot and stored 
+      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in datarobot and stored 
                                in Vantage.
 
 * ##### Updates
