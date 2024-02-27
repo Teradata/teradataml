@@ -16,51 +16,64 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 17.20.00.07
+* ##### New Features/Functionality
+* ###### Open Analytics Framework (OpenAF) APIs:
+    * Manage all user environments.
+      * `create_env()`:
+        * new argument `conda_env` is added to create a conda environment.
+      * `list_user_envs()`:
+        * User can list conda environment(s) by using filter with new argument `conda_env`.
+    *  Conda environment(s) can be managed using APIs for installing , updating, removing files/libraries. 
+* ##### Bug Fixes
+  * `columns` argument for `FillNa` function is made optional.
+  
+## Release Notes:
 #### teradataml 17.20.00.06
 * ##### New Features/Functionality
-  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
-      * `ColumnExpression.nulls_first()` - Displays NULL values at first.
-      * `ColumnExpression.nulls_last()` - Displays NULL values at last.
-      * _Bit Byte Manipulation Functions_
-        * `DataFrameColumn.bit_and()` - Returns the logical AND operation on the bits from
-           the column and corresponding bits from the argument.
-        * `DataFrameColumn.bit_get()` - Returns the bit specified by input argument from the column and 
-           returns either 0 or 1 to indicate the value of that bit.
-        * `DataFrameColumn.bit_or()` - Returns the logical OR operation on the bits from the column and 
-           corresponding bits from the argument.
-        * `DataFrameColumn.bit_xor()` - Returns the bitwise XOR operation on the binary representation of the
-           column and corresponding bits from the argument.
-        * `DataFrameColumn.bitand()` - It is an alias for `DataFrameColumn.bit_and()` function.
-        * `DataFrameColumn.bitnot()` - Returns a bitwise complement on the binary representation of the column.
-        * `DataFrameColumn.bitor()` - It is an alias for `DataFrameColumn.bit_or()` function.
-        * `DataFrameColumn.bitwise_not()` - It is an alias for `DataFrameColumn.bitnot()` function.
-        * `DataFrameColumn.bitwiseNOT()` - It is an alias for `DataFrameColumn.bitnot()` function.
-        * `DataFrameColumn.bitxor()` - It is an alias for `DataFrameColumn.bit_xor()` function.
-        * `DataFrameColumn.countset()` - Returns the count of the binary bits within the column that are either set to 1 
-           or set to 0, depending on the input argument value.
-        * `DataFrameColumn.getbit()` - It is an alias for `DataFrameColumn.bit_get()` function.
-        * `DataFrameColumn.rotateleft()` - Returns an expression rotated to the left by the specified number of bits,
-           with the most significant bits wrapping around to the right.
-        * `DataFrameColumn.rotateright()` - Returns an expression rotated to the right by the specified number of bits,
-           with the least significant bits wrapping around to the left.
-        * `DataFrameColumn.setbit()` - Sets the value of the bit specified by input argument to the value
-           of column.
-        * `DataFrameColumn.shiftleft()` - Returns the expression when value in column is shifted by the specified
-           number of bits to the left.
-        * `DataFrameColumn.shiftright()` - Returns the expression when column expression is shifted by the specified
-           number of bits to the right.
-        * `DataFrameColumn.subbitstr()` - Extracts a bit substring from the column expression based on the specified 
-           bit position.
-        * `DataFrameColumn.to_byte()` - Converts a numeric data type to the Vantage byte representation
-          (byte value) of the column expression value.
+* ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * `ColumnExpression.nulls_first()` - Displays NULL values at first.
+    * `ColumnExpression.nulls_last()` - Displays NULL values at last.
+    * _Bit Byte Manipulation Functions_
+      * `DataFrameColumn.bit_and()` - Returns the logical AND operation on the bits from
+         the column and corresponding bits from the argument.
+      * `DataFrameColumn.bit_get()` - Returns the bit specified by input argument from the column and 
+         returns either 0 or 1 to indicate the value of that bit.
+      * `DataFrameColumn.bit_or()` - Returns the logical OR operation on the bits from the column and 
+         corresponding bits from the argument.
+      * `DataFrameColumn.bit_xor()` - Returns the bitwise XOR operation on the binary representation of the
+         column and corresponding bits from the argument.
+      * `DataFrameColumn.bitand()` - It is an alias for `DataFrameColumn.bit_and()` function.
+      * `DataFrameColumn.bitnot()` - Returns a bitwise complement on the binary representation of the column.
+      * `DataFrameColumn.bitor()` - It is an alias for `DataFrameColumn.bit_or()` function.
+      * `DataFrameColumn.bitwise_not()` - It is an alias for `DataFrameColumn.bitnot()` function.
+      * `DataFrameColumn.bitwiseNOT()` - It is an alias for `DataFrameColumn.bitnot()` function.
+      * `DataFrameColumn.bitxor()` - It is an alias for `DataFrameColumn.bit_xor()` function.
+      * `DataFrameColumn.countset()` - Returns the count of the binary bits within the column that are either set to 1 
+         or set to 0, depending on the input argument value.
+      * `DataFrameColumn.getbit()` - It is an alias for `DataFrameColumn.bit_get()` function.
+      * `DataFrameColumn.rotateleft()` - Returns an expression rotated to the left by the specified number of bits,
+         with the most significant bits wrapping around to the right.
+      * `DataFrameColumn.rotateright()` - Returns an expression rotated to the right by the specified number of bits,
+         with the least significant bits wrapping around to the left.
+      * `DataFrameColumn.setbit()` - Sets the value of the bit specified by input argument to the value
+         of column.
+      * `DataFrameColumn.shiftleft()` - Returns the expression when value in column is shifted by the specified
+         number of bits to the left.
+      * `DataFrameColumn.shiftright()` - Returns the expression when column expression is shifted by the specified
+         number of bits to the right.
+      * `DataFrameColumn.subbitstr()` - Extracts a bit substring from the column expression based on the specified 
+         bit position.
+      * `DataFrameColumn.to_byte()` - Converts a numeric data type to the Vantage byte representation
+        (byte value) of the column expression value.
       
-      * _Regular Expression Functions_
-        * `DataFrameColumn.regexp_instr()` - Searches string value in column for a match to value specified in argument.
-        * `DataFrameColumn.regexp_replace()` - Replaces the portions of string value in a column that matches the value 
-           specified regex string and replaces with the replace string.
-        * `DataFrameColumn.regexp_similar()` - Compares value in column to value in argument and returns integer value.
-        * `DataFrameColumn.regexp_substr()` - Extracts a substring from column that matches a regular expression 
-           specified in the input argument.
+    * _Regular Expression Functions_
+      * `DataFrameColumn.regexp_instr()` - Searches string value in column for a match to value specified in argument.
+      * `DataFrameColumn.regexp_replace()` - Replaces the portions of string value in a column that matches the value 
+         specified regex string and replaces with the replace string.
+      * `DataFrameColumn.regexp_similar()` - Compares value in column to value in argument and returns integer value.
+      * `DataFrameColumn.regexp_substr()` - Extracts a substring from column that matches a regular expression 
+         specified in the input argument.
 
 * ###### Open Analytics Framework (OpenAF) APIs:
     * Manage all user environments.
@@ -76,7 +89,7 @@ Copyright 2023, Teradata. All Rights Reserved.
 
 * ###### teradataml: Bring Your Own Model
     * _New Functions_
-      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in DataRobot and stored 
+      * `DataRobotPredict()` - Score the data in Vantage using the model trained externally in datarobot and stored 
                                in Vantage.
 
 * ##### Updates
