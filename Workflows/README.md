@@ -25,9 +25,11 @@ Copyright 2023, Teradata. All Rights Reserved.
 #### GeoSpatial - contains workflows for GeoDataFrame methods and properties
     ##### GeoDataFrame methods and properties - GeoSpatial.ipynb
 
-#### HyperParameterTuning - contains workflows for HyperParameterTuning 
+#### ML/HPT - contains workflows for HyperParameterTuning 
+    ##### HyperParameter Tuning - Hyperparameter-Tuning Demo_UseCase_titanic.ipynb 
 
-#### Plot - contains workflows for teradataml plotting
+#### Visualization - contains workflows for teradataml plotting
+    ##### Plot - Visualization.ipynb 
 
 ## Documentation
 
