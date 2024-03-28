@@ -25,8 +25,15 @@ Copyright 2023, Teradata. All Rights Reserved.
 #### GeoSpatial - contains workflows for GeoDataFrame methods and properties
     ##### GeoDataFrame methods and properties - GeoSpatial.ipynb
 
+#### ML/AutoML - contains workflows for AutoML 
+    ##### Housing_Auto_Run_Early_Stop_Metric_Timer.ipynb
+    ##### Housing_Custom_Run_Early_Stop_Metric_Timer.ipynb
+    ##### Iris_Auto.ipynb
+    ##### Iris_Custom.ipynb
+    ##### Titanic_Auto.ipynb
+    ##### Titanic_Custom.ipynb
 #### ML/HPT - contains workflows for HyperParameterTuning 
-    ##### HyperParameter Tuning - Hyperparameter-Tuning Demo_UseCase_titanic.ipynb 
+    ##### HyperParameter Tuning - Hyperparameter-Tuning Demo_UseCase_titanic.ipynb
 
 #### Visualization - contains workflows for teradataml plotting
     ##### Plot - Visualization.ipynb 
