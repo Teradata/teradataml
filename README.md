@@ -16,6 +16,232 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 20.00.00.00
+* ##### New Features/Functionality
+    * ###### teradataml OpenML: Run Opensource packages through Teradata Vantage
+      `OpenML` dynamically exposes opensource packages through Teradata Vantage. `OpenML` provides an
+      interface object through which exposed classes and functions of opensource packages can be accessed
+      with the same syntax and arguments. 
+      The following functionality is added in the current release:
+      * `td_sklearn` - Interface object to run scikit-learn functions and classes through Teradata Vantage.
+      Example usage below:
+        ```
+        from teradataml import td_sklearn, DataFrame
+
+        df_train = DataFrame("multi_model_classification")
+
+        feature_columns = ["col1", "col2", "col3", "col4"]
+        label_columns = ["label"]
+        part_columns = ["partition_column_1", "partition_column_2"]
+
+        linear_svc = td_sklearn.LinearSVC()
+        ```
+      * `OpenML` is supported in both Teradata Vantage Enterprise and Teradata Vantage Lake.
+      * Argument Support:
+        * `Use of X and y arguments` - Scikit-learn users are familiar with using `X` and `y` as argument names
+        which take data as pandas DataFrames, numpy arrays or lists etc. However, in OpenML, we pass 
+        teradataml DataFrames for arguments `X` and `y`.
+          ```
+          df_x = df_train.select(feature_columns)
+          df_y = df_train.select(label_columns)
+
+          linear_svc = linear_svc.fit(X=df_x, y=df_y)
+          ```
+        * `Additional support for data, feature_columns, label_columns and group_columns arguments` -
+        Apart from traditional arguments, OpenML supports additional arguments - `data`,
+        `feature_columns`, `label_columns` and `group_columns`. These are used as alternatives to `X`, `y`
+        and `groups`.
+          ```
+          linear_svc = linear_svc.fit(data=df_train, feature_columns=feature_columns, label_colums=label_columns)
+          ```
+      * `Support for classification and regression metrics` - Metrics functions for classification and
+      regression in `sklearn.metrics` module are supported. Other metrics functions' support will be added
+      in future releases.
+      * `Distributed Modeling and partition_columns argument support` - Existing scikit-learn supports 
+      only single model generation. However, OpenML supports both single model use case and distributed
+      (multi) model use case. For this, user has to additionally pass `partition_columns` argument to 
+      existing `fit()`, `predict()` or any other function to be run. This will generate multiple models
+      for multiple partitions, using the data in corresponding partition.
+        ```
+        df_x_1 = df_train.select(feature_columns + part_columns)
+        linear_svc = linear_svc.fit(X=df_x_1, y=df_y, partition_columns=part_columns)      
+        ```
+      * `Support for load and deploy models` - OpenML provides additional support for saving (deploying) the
+      trained models. These models can be loaded later to perform operations like prediction, score etc. The
+      following functions are provided by OpenML:
+        * `<obj>.deploy()` - Used to deploy/save the model created and/or trained by OpenML.
+        * `td_sklearn.deploy()` - Used to deploy/save the model created and/or trained outside teradataml.
+        * `td_sklearn.load()` - Used to load the saved models.
+      
+      <br>Refer Teradata Python Package User Guide for more details of this feature, arguments, usage, examples and supportability in both VantageCloud Enterprise and VantageCloud Lake.
+
+    * ###### teradataml: AutoML - Automated end to end Machine Learning flow.
+      AutoML is an approach to automate the process of building, training, and validating machine learning models. 
+      It involves automation of various aspects of the machine learning workflow, such as feature exploration, 
+      feature engineering, data preparation, model training and evaluation for given dataset.
+      teradataml AutoML feature offers best model identification, model leaderboard generation, parallel execution, 
+      early stopping feature, model evaluation, model prediction, live logging, customization on default process.
+      * `AutoML`
+        AutoML is a generic algorithm that supports all three tasks, i.e. 'Regression',
+        'Binary Classification' and 'Multiclass Classification'. 
+        * Methods of AutoML
+          * `__init__()` - Instantiate an object of AutoML with given parameters.
+          * `fit()` - Perform fit on specified data and target column.
+          * `leaderboard()` - Get the leaderboard for the AutoML. Presents diverse models, feature 
+          selection method, and performance metrics.
+          * `leader()` - Show best performing model and its details such as feature 
+          selection method, and performance metrics.
+          * `predict()` - Perform prediction on the data using the best model or the model of users 
+          choice from the leaderboard.
+          * `generate_custom_config()` - Generate custom config JSON file required for customized 
+          run of AutoML.
+      * `AutoRegressor`
+        AutoRegressor is a special purpose AutoML feature to run regression specific tasks. 
+        * Methods of AutoRegressor
+          * `__init__()` - Instantiate an object of AutoRegressor with given parameters.
+          * `fit()` - Perform fit on specified data and target column.
+          * `leaderboard()` - Get the leaderboard for the AutoRegressor. Presents diverse models, feature 
+          selection method, and performance metrics.
+          * `leader()` - Show best performing model and its details such as feature 
+          selection method, and performance metrics.
+          * `predict()` - Perform prediction on the data using the best model or the model of users 
+          choice from the leaderboard.
+          * `generate_custom_config()` - Generate custom config JSON file required for customized 
+          run of AutoRegressor.
+      * `AutoClassifier`
+        AutoClassifier is a special purpose AutoML feature to run classification specific tasks.
+        * Methods of AutoClassifier
+          * `__init__()` - Instantiate an object of AutoClassifier with given parameters.
+          * `fit()` - Perform fit on specified data and target column.
+          * `leaderboard()` - Get the leaderboard for the AutoClassifier. Presents diverse models, feature 
+          selection method, and performance metrics.
+          * `leader()` - Show best performing model and its details such as feature 
+          selection method, and performance metrics.
+          * `predict()` - Perform prediction on the data using the best model or the model of users 
+          choice from the leaderboard.
+          * `generate_custom_config()` - Generate custom config JSON file required for customized 
+          run of AutoClassifier.
+
+    * ###### teradataml: DataFrame
+      * `fillna` - Replace the null values in a column with the value specified. 
+      * Data Manipulation
+          * `cube()`- Analyzes data by grouping it into multiple dimensions.
+          * `rollup()` - Analyzes a set of data across a single dimension with more than one level of detail.
+          * `replace()` - Replaces the values for columns.
+
+    * ###### teradataml: Script and Apply
+      * `deploy()` - Function deploys the model, generated after `execute_script()`, in database or user
+            environment in lake. The function is available in both Script and Apply.
+
+    * ###### teradataml: DataFrameColumn
+      * `fillna` - Replaces every occurrence of null value in column with the value specified.
+    
+* ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * _Date Time Functions_
+      * `DataFrameColumn.week_start()` - Returns the first date or timestamp of the week that begins immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_begin()` - It is an alias for `DataFrameColumn.week_start()` function.
+      * `DataFrameColumn.week_end()` - Returns the last date or timestamp of the week that ends immediately after the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_start()` - Returns the first date or timestamp of the month that begins immediately before the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.month_begin()` - It is an alias for `DataFrameColumn.month_start()` function.
+      * `DataFrameColumn.month_end()` - Returns the last date or timestamp of the month that ends immediately after the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.year_start()` - Returns the first date or timestamp of the year that begins immediately before the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.year_begin()` - It is an alias for `DataFrameColumn.year_start()` function.
+      * `DataFrameColumn.year_end()` - Returns the last date or timestamp of the year that ends immediately after the specified date or timestamp value in a column or as a literal.
+      * `DataFrameColumn.quarter_start()` - Returns the first date or timestamp of the quarter that begins immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_begin()` - It is an alias for `DataFrameColumn.quarter_start()` function.
+      * `DataFrameColumn.quarter_end()` - Returns the last date or timestamp of the quarter that ends immediately after the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_sunday()` - Returns the date or timestamp of Sunday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_monday()` - Returns the date or timestamp of Monday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_tuesday()` - Returns the date or timestamp of Tuesday that falls immediately before the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_wednesday()` - Returns the date or timestamp of Wednesday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_thursday()`- Returns the date or timestamp of Thursday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_friday()` - Returns the date or timestamp of Friday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.last_saturday()` - Returns the date or timestamp of Saturday that falls immediately before specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_week()` - Returns the number of days from the beginning of the week to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_month()` - Returns the number of days from the beginning of the month to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_year()` - Returns the number of days from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_of_calendar()` - Returns the number of days from the beginning of the business calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_month()` - Returns the number of weeks from the beginning of the month to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_quarter()` - Returns the number of weeks from the beginning of the quarter to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_year()` - Returns the number of weeks from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.week_of_calendar()` - Returns the number of weeks from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_year()` - Returns the number of months from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_calendar()` - Returns the number of months from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month_of_quarter()` - Returns the number of months from the beginning of the quarter to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_of_year()` - Returns the number of quarters from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.quarter_of_calendar()` - Returns the number of quarters from the beginning of the calendar to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.year_of_calendar()` - Returns the year of the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.day_occurrence_of_month()` - Returns the nth occurrence of the weekday in the month for the date to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.year()` - Returns the integer value for year in the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.month()` - Returns the integer value for month in the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.hour()` - Returns the integer value for hour in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.minute()` - Returns the integer value for minute in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.second()` - Returns the integer value for seconds in the specified timestamp value in a column as a literal.
+      * `DataFrameColumn.week()` - Returns the number of weeks from the beginning of the year to the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.next_day()` - Returns the date of the first weekday specified as 'day_value' that is later than the specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.months_between()` - Returns the number of months between value in specified date or timestamp value in a column as a literal and date or timestamp value in argument.
+      * `DataFrameColumn.add_months()` - Adds an integer number of months to specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.oadd_months()` - Adds an integer number of months, date or timestamp value in specified date or timestamp value in a column as a literal.
+      * `DataFrameColumn.to_date()` - Function converts a string-like representation of a DATE or PERIOD type to Date type.
+    * _String Functions_
+      * `DataFrameColumn.concat()` - Function to concatenate the columns with a separator.
+      * `DataFrameColumn.like()` - Function to match the string pattern. String match is case sensitive. 
+      * `DataFrameColumn.ilike()` - Function to match the string pattern. String match is not case sensitive.
+      * `DataFrameColumn.substr()` - Returns the substring from a string column.       
+      * `DataFrameColumn.startswith()` - Function to check if the column value starts with the specified value or not.       
+      * `DataFrameColumn.endswith()` - Function to check if the column value ends with the specified value or not.
+      * `DataFrameColumn.format()` - Function to format the values in column based on formatter.
+      * `DataFrameColumn.to_char()` - Function converts numeric type or datetype to character type.
+      * `DataFrameColumn.trim()` - Function trims the string values in the column.
+    * _Regular Arithmetic Functions_
+      * `DataFrameColumn.cbrt()` - Computes the cube root of values in the column.
+      * `DataFrameColumn.hex()` - Computes the Hexadecimal from decimal for the values in the column.
+      * `DataframeColumn.hypot()` - Computes the decimal from Hexadecimal for the values in the column.
+      * `DataFrameColumn.unhex()` - computes the hypotenuse for the values between two columns.
+    * _Bit Byte Manipulation Functions_
+      * `DataFrameColumn.from_byte()` - Encodes a sequence of bits into a sequence of characters.
+    * _Comparison Functions_
+      * `DataFrameColumn.greatest()` - Returns the greatest values from columns.
+      * `DataFrameColumn.least()` - Returns the least values from columns.
+    * Behaviour of `DataFrameColumn.replace()` is changed.
+    * Behaviour of `DataFrameColumn.to_byte()` is changed. It now decodes a sequence of characters in a given encoding into a sequence of bits.
+    * Behaviour of `DataFrameColumn.trunc()` is changed. It now accepts Date type columns.  
+
+* ##### Bug Fixes
+  * Argument `url_encode` is no longer used in `create_context()` and is deprecated. 
+    * **Important notes**
+      * Users do not need to encode password even if password contain special characters.
+      * Pass the password to the `create_context()` function argument `password` as it is without changing special characters.
+  * `fillna()` in VAL transformation allows to replace NULL values with empty string.
+
+* ##### Updates
+  * Support for following deprecated functionality is removed:
+    * ML Engine functions
+    * STO and APPLY sandbox feature support for testing the script.   
+      * sandbox_container_utils is removed. Following methods can no longer be used:
+        * `setup_sandbox_env()`
+        * `copy_files_from_container()`
+        * `cleanup_sandbox_env()`
+    * Model Cataloging APIs can no longer be used: 
+        * `describe_model()`
+        * `delete_model()`
+        * `list_models()`
+        * `publish_model()`
+        * `retrieve_model()`
+        * `save_model()`
+  * `DataFrame.join()`
+    * Arguments `lsuffix` and `rsuffix` now add suffixes to new column names for join operation.
+  * `DataFrame.describe()`
+    * New argument `columns` is added to generate statistics on only those columns instead of all applicable columns.
+  * `DataFrame.groupby()`
+    * Supports `CUBE` and `ROLLUP` with additional optional argument `option`.
+  * `DataFrame.column.window()` 
+    * Supports ColumnExpressions for `partition_columns` and `order_columns` arguments.
+  * `DataFrame.column.contains()` allows ColumnExpressions for `pattern` argument.
+  * `DataFrame.window()` 
+    * Supports ColumnExpressions for `partition_columns` and `order_columns` arguments.
+
+## Release Notes:
 #### teradataml 17.20.00.07
 * ##### New Features/Functionality
 * ###### Open Analytics Framework (OpenAF) APIs:
