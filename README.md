@@ -6,7 +6,7 @@ For community support, please visit the [Teradata Community](https://support.ter
 
 For Teradata customer support, please visit [Teradata Support](https://support.teradata.com/csm).
 
-Copyright 2023, Teradata. All Rights Reserved.
+Copyright 2024, Teradata. All Rights Reserved.
 
 ### Table of Contents
 * [Release Notes](#release-notes)
@@ -16,6 +16,76 @@ Copyright 2023, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 20.00.00.01
+* teradataml no longer supports Python versions less than 3.8.
+
+* ##### New Features/Functionality
+  * ##### Personal Access Token (PAT) support in teradataml
+    * `set_auth_token()` - teradataml now supports authentication via PAT in addition to 
+      OAuth 2.0 Device Authorization Grant (formerly known as the Device Flow).
+      * It accepts UES URL, Personal AccessToken (PAT) and Private Key file generated from VantageCloud Lake Console 
+        and optional argument `username` and `expiration_time` in seconds. 
+
+* ##### Updates
+  * ##### teradataml: SQLE Engine Analytic Functions
+    * `ANOVA()`
+      * New arguments added: `group_name_column`, `group_value_name`, `group_names`, `num_groups` for data containing group values and group names. 
+    * `FTest()`
+      * New arguments added: `sample_name_column`, `sample_name_value`, `first_sample_name`, `second_sample_name`.
+    * `GLM()`
+      * Supports stepwise regression and accept new arguments `stepwise_direction`, `max_steps_num` and `initial_stepwise_columns`.
+      * New arguments added: `attribute_data`, `parameter_data`, `iteration_mode` and `partition_column`.
+    * `GetFutileColumns()`
+      * Arguments `category_summary_column` and `threshold_value` are now optional.
+    * `KMeans()`
+      * New argument added: `initialcentroids_method`.
+    * `NonLinearCombineFit()`
+        * Argument `result_column` is now optional.
+    * `ROC()`
+        * Argument `positive_class` is now optional. 
+    * `SVMPredict()`
+      * New argument added: `model_type`.   
+    * `ScaleFit()`
+      * New arguments added: `ignoreinvalid_locationscale`, `unused_attributes`, `attribute_name_column`, `attribute_value_column`.
+      * Arguments `attribute_name_column`, `attribute_value_column` and `target_attributes` are supported for sparse input.
+      * Arguments `attribute_data`, `parameter_data` and `partition_column` are supported for partitioning.
+    * `ScaleTransform()`
+      * New arguments added: `attribute_name_column` and `attribute_value_column` support for sparse input.
+    * `TDGLMPredict()`
+      * New arguments added: `family` and `partition_column`.
+    * `XGBoost()`
+      * New argument `base_score` is added for initial prediction value for all data points.
+    * `XGBoostPredict()`
+      * New argument `detailed` is added for detailed information of each prediction.
+    * `ZTest()`
+      * New arguments added: `sample_name_column`, `sample_value_column`,  `first_sample_name` and `second_sample_name`.
+  * ##### teradataml: AutoML
+    * `AutoML()`, `AutoRegressor()` and `AutoClassifier()`
+      * New argument `max_models` is added as an early stopping criterion to limit the maximum number of models to be trained.
+  * ##### teradataml: DataFrame functions
+    * `DataFrame.agg()` 
+      * Accepts ColumnExpressions and list of ColumnExpressions as arguments.
+  * ##### teradataml: General Functions
+    * Data Transfer Utility
+      * `fastload()` - Improved error and warning table handling with below-mentioned new arguments.
+        * `err_staging_db`
+        * `err_tbl_name`
+        * `warn_tbl_name`
+        * `err_tbl_1_suffix`
+        * `err_tbl_2_suffix`
+      * `fastload()` - Change in behaviour of `save_errors` argument.
+                       When `save_errors` is set to `True`, error information will be available in two persistent tables `ERR_1` and `ERR_2`.
+                       When `save_errors` is set to `False`, error information will be available in single pandas dataframe.
+    * Garbage collector location is now configurable. 
+      User can set configure.local_storage to a desired location.
+      
+* ##### Bug Fixes
+  * UAF functions now work if the database name has special characters.
+  * OpensourceML can now read and process NULL/nan values.
+  * Boolean values output will now be returned as VARBYTE column with 0 or 1 values in OpensourceML.
+  * Fixed bug for `Apply`'s `deploy()`.
+  * Issue with volatile table creation is fixed where it is created in the right database, i.e., user's spool space, regardless of the temp database specified.
+
 #### teradataml 20.00.00.00
 * ##### New Features/Functionality
     * ###### teradataml OpenML: Run Opensource packages through Teradata Vantage
@@ -241,20 +311,18 @@ Copyright 2023, Teradata. All Rights Reserved.
   * `DataFrame.window()` 
     * Supports ColumnExpressions for `partition_columns` and `order_columns` arguments.
 
-## Release Notes:
 #### teradataml 17.20.00.07
 * ##### New Features/Functionality
-* ###### Open Analytics Framework (OpenAF) APIs:
-    * Manage all user environments.
-      * `create_env()`:
-        * new argument `conda_env` is added to create a conda environment.
-      * `list_user_envs()`:
-        * User can list conda environment(s) by using filter with new argument `conda_env`.
-    *  Conda environment(s) can be managed using APIs for installing , updating, removing files/libraries. 
+  * ###### Open Analytics Framework (OpenAF) APIs:
+      * Manage all user environments.
+        * `create_env()`:
+          * new argument `conda_env` is added to create a conda environment.
+        * `list_user_envs()`:
+          * User can list conda environment(s) by using filter with new argument `conda_env`.
+      *  Conda environment(s) can be managed using APIs for installing , updating, removing files/libraries. 
 * ##### Bug Fixes
   * `columns` argument for `FillNa` function is made optional.
-  
-## Release Notes:
+
 #### teradataml 17.20.00.06
 * ##### New Features/Functionality
 * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
