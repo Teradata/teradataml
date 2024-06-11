@@ -85,6 +85,7 @@ Copyright 2024, Teradata. All Rights Reserved.
   * Boolean values output will now be returned as VARBYTE column with 0 or 1 values in OpensourceML.
   * Fixed bug for `Apply`'s `deploy()`.
   * Issue with volatile table creation is fixed where it is created in the right database, i.e., user's spool space, regardless of the temp database specified.
+  * `ColumnTransformer` function now processes its arguments in the order they are passed.
 
 #### teradataml 20.00.00.00
 * ##### New Features/Functionality
