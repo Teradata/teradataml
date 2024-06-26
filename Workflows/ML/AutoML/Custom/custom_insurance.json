@@ -1,0 +1,23 @@
+{
+    "BincodeIndicator": true,
+    "BincodeParam": {
+        "age": {
+            "Type": "Equal-Width",
+            "NumOfBins": 3
+        }
+    },
+    "CategoricalEncodingIndicator": true,
+    "CategoricalEncodingParam": {
+        "TargetEncodingIndicator": true,
+        "TargetEncodingList": {
+            "region": {
+                "encoder_method": "CBM_GAUSSIAN_INVERSE_GAMMA",
+                "response_column": "charges"
+            }
+        }
+    },
+    "TrainTestSplitIndicator": true,
+    "TrainingSize": 0.9,
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "midrange"
+}

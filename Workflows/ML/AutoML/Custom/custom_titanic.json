@@ -1,0 +1,91 @@
+{
+    "MissingValueHandlingIndicator": true,
+    "MissingValueHandlingParam": {
+        "DroppingColumnIndicator": true,
+        "DroppingColumnList": [
+            "cabin"
+        ],
+        "ImputeMissingIndicator": true,
+        "StatImputeList": [
+            "age",
+            "embarked"
+        ],
+        "StatImputeMethod": [
+            "median",
+            "mode"
+        ]
+    },
+    "BincodeIndicator": true,
+    "BincodeParam": {
+        "pclass": {
+            "Type": "Variable-Width",
+            "NumOfBins": 2,
+            "Bin_1": {
+                "min_value": 0,
+                "max_value": 1,
+                "label": "low"
+            },
+            "Bin_2": {
+                "min_value": 2,
+                "max_value": 3,
+                "label": "high"
+            }
+        }
+    },
+    "CategoricalEncodingIndicator": true,
+    "CategoricalEncodingParam": {
+        "OrdinalEncodingIndicator": true,
+        "OrdinalEncodingList": [
+            "pclass"
+        ],
+        "TargetEncodingIndicator": true,
+        "TargetEncodingList": {
+            "embarked": {
+                "encoder_method": "CBM_GAUSSIAN_INVERSE_GAMMA",
+                "response_column": "survived"
+            }
+        }
+    },
+    "NonLinearTransformationIndicator": true,
+    "NonLinearTransformationParam": {
+        "Combination_1": {
+            "target_columns": [
+                "parch",
+                "sibsp"
+            ],
+            "formula": "Y=(X0+X1+1)",
+            "result_column": "Family_count"
+        }
+    },
+    "AntiselectIndicator": true,
+    "AntiselectParam": [
+        "passenger"
+    ],
+    "TrainTestSplitIndicator": true,
+    "TrainingSize": 0.75,
+    "DataImbalanceIndicator": true,
+    "DataImbalanceMethod": "SMOTE",
+    "OutlierFilterIndicator": true,
+    "OutlierFilterMethod": "percentile",
+    "OutlierLowerPercentile": 0.1,
+    "OutlierUpperPercentile": 0.9,
+    "OutlierFilterParam": {
+        "fare": {
+            "replacement_value": "median"
+        }
+    },
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "std",
+    "HyperparameterTuningIndicator": true,
+    "HyperparameterTuningParam": {
+        "xgboost": {
+            "min_node_size": {
+                "Method": "ADD",
+                "Value": [
+                    1,
+                    5
+                ]
+            }
+        }
+    }
+}

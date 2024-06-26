@@ -1,0 +1,45 @@
+{
+    "BincodeIndicator": true,
+    "BincodeParam": {
+        "age": {
+            "Type": "Variable-Width",
+            "NumOfBins": 4,
+            "Bin_1": {
+                "min_value": 0,
+                "max_value": 24,
+                "label": "young"
+            },
+            "Bin_2": {
+                "min_value": 25,
+                "max_value": 49,
+                "label": "adult"
+            },
+            "Bin_3": {
+                "min_value": 50,
+                "max_value": 74,
+                "label": "old"
+            },
+            "Bin_4": {
+                "min_value": 75,
+                "max_value": 100,
+                "label": "older"
+            }
+        }
+    },
+    "CategoricalEncodingIndicator": true,
+    "CategoricalEncodingParam": {
+        "TargetEncodingIndicator": true,
+        "TargetEncodingList": {
+            "gender": {
+                "encoder_method": "CBM_BETA",
+                "response_column": "churn"
+            }
+        }
+    },
+    "AntiselectIndicator": true,
+    "AntiselectParam": [
+        "customer_id"
+    ],
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "std"
+}

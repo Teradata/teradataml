@@ -1,0 +1,26 @@
+{
+    "TrainTestSplitIndicator": true,
+    "TrainingSize": 0.7,
+    "DataImbalanceIndicator": true,
+    "DataImbalanceMethod": "SMOTE",
+    "OutlierFilterIndicator": true,
+    "OutlierFilterMethod": "carling",
+    "OutlierFilterParam": {
+        "residual_sugar": {
+            "replacement_value": "delete"
+        }
+    },
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "std",
+    "HyperparameterTuningIndicator": true,
+    "HyperparameterTuningParam": {
+        "knn": {
+            "k": {
+                "Method": "ADD",
+                "Value": [
+                    2
+                ]
+            }
+        }
+    }
+}
