@@ -19,13 +19,41 @@ For Teradata customer support, please visit [Teradata Support](https://support.t
 
 Copyright 2024, Teradata. All Rights Reserved.
 
-## Following workflows in the form of Jupyter notebooks are provided:
-    ##### Housing_Auto_Run_Early_Stop_Metric_Timer.ipynb
-    ##### Housing_Custom_Run_Early_Stop_Metric_Timer.ipynb
-    ##### Iris_Auto.ipynb
-    ##### Iris_Custom.ipynb
-    ##### Titanic_Auto.ipynb
-    ##### Titanic_Custom.ipynb
+## Following workflows in the form of Jupyter notebooks are provided for both Auto and Custom run with corresponding jsons:
+* #### Auto Run Notebooks
+    ##### Binary_Classification__Bank_Churn_Prediction.ipynb
+    ##### Binary_Classification__Bank_Marketing_Outcome_Prediction.ipynb
+    ##### Binary_Classification__Breast_Cancer_Prediction.ipynb
+    ##### Binary_Classification__Titanic_Survival_Prediction.ipynb
+    ##### Binary_Classification__Wine_Quality_Prediction.ipynb
+    ##### Multi_Classification__BMI_Value_Prediction.ipynb
+    ##### Multi_Classification__Glass_Type_Prediction.ipynb
+    ##### Multi_Classification__Iris_Flower_Type_Prediction.ipynb
+    ##### Regression__Advertisment_Sales_Prediction.ipynb
+    ##### Regression__Bike_Sharing_Demand_Prediction.ipynb
+    ##### Regression__Fish_Weight_Prediction.ipynb
+    ##### Regression__House_Price_Prediction.ipynb
+    ##### Regression__Insurance_Charges_Prediction.ipynb
+    
+* #### Custom Run Notebooks with corresponding jsons
+    ##### Binary_Classification__Bank_Churn_Prediction.ipynb
+      ##### Custom json : custom_bank_churn.json
+    ##### Binary_Classification__Bank_Marketing_Outcome_Prediction.ipynb
+      ##### Custom json : custom_bank_marketing.json
+    ##### Binary_Classification__Breast_Cancer_Prediction.ipynb
+      ##### Custom json : custom_breast_cancer.json
+    ##### Binary_Classification__Titanic_Survival_Prediction.ipynb
+      ##### Custom json : custom_titanic.json
+    ##### Binary_Classification__Wine_Quality_Prediction.ipynb
+      ##### Custom json : custom_wine_quality.json
+    ##### Multi_Classification__Iris_Flower_Type_Prediction.ipynb
+      ##### Custom json : custom_iris.json
+    ##### Regression__Fish_Weight_Prediction.ipynb
+      ##### Custom json : custom_fish_weight.json
+    ##### Regression__House_Price_Prediction.ipynb
+      ##### Custom json : custom_housing.json
+    ##### Regression__Insurance_Charges_Prediction.ipynb
+      ##### Custom json : custom_insurance.json
 
 ## Documentation
 
