@@ -1,0 +1,27 @@
+{
+    "TrainTestSplitIndicator": true,
+    "TrainingSize": 0.7,
+    "OutlierFilterIndicator": true,
+    "OutlierFilterMethod": "tukey",
+    "OutlierFilterParam": {
+        "Length2": {
+            "replacement_value": "median"
+        }
+    },
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "std",
+    "HyperparameterTuningIndicator": true,
+    "HyperparameterTuningParam": {
+        "xgboost": {
+            "max_depth": {
+                "Method": "REPLACE",
+                "Value": [
+                    4,
+                    5,
+                    8,
+                    10
+                ]
+            }
+        }
+    }
+}

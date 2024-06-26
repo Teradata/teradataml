@@ -1,0 +1,17 @@
+{
+    "BincodeIndicator": true,
+    "BincodeParam": {
+        "day_of_month": {
+            "Type": "Equal-Width",
+            "NumOfBins": 4
+        }
+    },
+    "CategoricalEncodingIndicator": true,
+    "CategoricalEncodingParam": {
+        "OrdinalEncodingIndicator": true,
+        "OrdinalEncodingList": [
+            "education",
+            "job"
+        ]
+    }
+}

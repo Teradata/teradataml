@@ -1,0 +1,64 @@
+{
+    "BincodeIndicator": true,
+    "BincodeParam": {
+        "bedrooms": {
+            "Type": "Variable-Width",
+            "NumOfBins": 2,
+            "Bin_1": {
+                "min_value": 0,
+                "max_value": 2,
+                "label": "small_house"
+            },
+            "Bin_2": {
+                "min_value": 3,
+                "max_value": 5,
+                "label": "big_house"
+            }
+        }
+    },
+    "CategoricalEncodingIndicator": true,
+    "CategoricalEncodingParam": {
+        "OrdinalEncodingIndicator": true,
+        "OrdinalEncodingList": [
+            "homestyle"
+        ],
+        "TargetEncodingIndicator": true,
+        "TargetEncodingList": {
+            "prefarea": {
+                "encoder_method": "CBM_GAUSSIAN_INVERSE_GAMMA",
+                "response_column": "price"
+            }
+        }
+    },
+    "AntiselectIndicator": true,
+    "AntiselectParam": [
+        "sn"
+    ],
+    "TrainTestSplitIndicator": true,
+    "TrainingSize": 0.75,
+    "DataImbalanceIndicator": true,
+    "DataImbalanceMethod": "SMOTE",
+    "OutlierFilterIndicator": true,
+    "OutlierFilterMethod": "percentile",
+    "OutlierLowerPercentile": 0.1,
+    "OutlierUpperPercentile": 0.9,
+    "OutlierFilterParam": {
+        "bathrms": {
+            "replacement_value": "delete"
+        }
+    },
+    "FeatureScalingIndicator": true,
+    "FeatureScalingMethod": "std",
+    "HyperparameterTuningIndicator": true,
+    "HyperparameterTuningParam": {
+        "xgboost": {
+            "min_node_size": {
+                "Method": "ADD",
+                "Value": [
+                    1,
+                    2
+                ]
+            }
+        }
+    }
+}
