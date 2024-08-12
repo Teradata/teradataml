@@ -1,15 +1,16 @@
 {
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.85,
     "DataImbalanceIndicator": true,
     "DataImbalanceMethod": "SMOTE",
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "range",
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std",
+        "volatile": true
+    },
     "HyperparameterTuningIndicator": true,
     "HyperparameterTuningParam": {
         "xgboost": {
             "max_depth": {
-                "Method": "ADD",
+                "Method": "REPLACE",
                 "Value": [
                     3,
                     4

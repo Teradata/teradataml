@@ -11,7 +11,7 @@
             },
             "Bin_2": {
                 "min_value": 3,
-                "max_value": 5,
+                "max_value": 6,
                 "label": "big_house"
             }
         }
@@ -31,34 +31,20 @@
         }
     },
     "AntiselectIndicator": true,
-    "AntiselectParam": [
-        "sn"
-    ],
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.75,
+    "AntiselectParam": {
+        "excluded_columns": [
+            "sn"
+        ]
+    },
     "DataImbalanceIndicator": true,
     "DataImbalanceMethod": "SMOTE",
     "OutlierFilterIndicator": true,
     "OutlierFilterMethod": "percentile",
-    "OutlierLowerPercentile": 0.1,
-    "OutlierUpperPercentile": 0.9,
+    "OutlierLowerPercentile": 0.15,
+    "OutlierUpperPercentile": 0.85,
     "OutlierFilterParam": {
         "bathrms": {
             "replacement_value": "delete"
-        }
-    },
-    "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "std",
-    "HyperparameterTuningIndicator": true,
-    "HyperparameterTuningParam": {
-        "xgboost": {
-            "min_node_size": {
-                "Method": "ADD",
-                "Value": [
-                    1,
-                    2
-                ]
-            }
         }
     }
 }

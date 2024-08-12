@@ -16,8 +16,21 @@
             }
         }
     },
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.9,
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "midrange"
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std"
+    },
+    "HyperparameterTuningIndicator": true,
+    "HyperparameterTuningParam": {
+        "xgboost": {
+            "max_depth": {
+                "Method": "REPLACE",
+                "Value": [
+                    4,
+                    5,
+                    6
+                ]
+            }
+        }
+    }
 }

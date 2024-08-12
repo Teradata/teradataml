@@ -24,19 +24,23 @@ Copyright 2024, Teradata. All Rights Reserved.
     - ##### Binary_Classification__Bank_Churn_Prediction.ipynb
     - ##### Binary_Classification__Bank_Marketing_Outcome_Prediction.ipynb
     - ##### Binary_Classification__Breast_Cancer_Prediction.ipynb
-    - ##### Binary_Classification__Titanic_Survival_Prediction.ipynb
+    - ##### Binary_Classification__Titanic_Survival_Prediction_Deploy_Models.ipynb
+    - ##### Binary_Classification__Titanic_Survival_Prediction_Load_Models.ipynb
     - ##### Binary_Classification__Wine_Quality_Prediction.ipynb
-    - ##### Multi_Classification__BMI_Value_Prediction.ipynb
+    - ##### Multi_Classification__BMI_Value_Prediction_Deploy_Models.ipynb
+    - ##### Multi_Classification__BMI_Value_Prediction_Load_Models.ipynb
     - ##### Multi_Classification__Glass_Type_Prediction.ipynb
     - ##### Multi_Classification__Iris_Flower_Type_Prediction.ipynb
-    - ##### Regression__Advertisment_Sales_Prediction.ipynb
+    - ##### Regression__Advertisment_Sales_Prediction_Deploy_Models.ipynb
+    - ##### Regression__Advertisment_Sales_Prediction_Load_Models.ipynb
     - ##### Regression__Bike_Sharing_Demand_Prediction.ipynb
     - ##### Regression__Fish_Weight_Prediction.ipynb
     - ##### Regression__House_Price_Prediction.ipynb
     - ##### Regression__Insurance_Charges_Prediction.ipynb
     
 * #### Custom Run Notebooks with corresponding jsons
-    - ##### Binary_Classification__Bank_Churn_Prediction.ipynb
+    - ##### Binary_Classification__Bank_Churn_Prediction_Deploy_Models.ipynb
+    - ##### Binary_Classification__Bank_Churn_Prediction_Load_Models.ipynb
       - Custom json : custom_bank_churn.json
     - ##### Binary_Classification__Bank_Marketing_Outcome_Prediction.ipynb
       - Custom json : custom_bank_marketing.json
