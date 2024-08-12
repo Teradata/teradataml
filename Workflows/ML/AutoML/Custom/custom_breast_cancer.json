@@ -1,10 +1,8 @@
 {
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.75,
     "OutlierFilterIndicator": true,
     "OutlierFilterMethod": "percentile",
     "OutlierLowerPercentile": 0.15,
-    "OutlierUpperPercentile": 0.85,
+    "OutlierUpperPercentile": 0.9,
     "OutlierFilterParam": {
         "area_se": {
             "replacement_value": "delete"
@@ -14,5 +12,7 @@
         }
     },
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "midrange"
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "midrange"
+    }
 }

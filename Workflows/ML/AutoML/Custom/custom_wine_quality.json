@@ -1,6 +1,4 @@
 {
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.7,
     "DataImbalanceIndicator": true,
     "DataImbalanceMethod": "SMOTE",
     "OutlierFilterIndicator": true,
@@ -11,7 +9,9 @@
         }
     },
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "std",
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std"
+    },
     "HyperparameterTuningIndicator": true,
     "HyperparameterTuningParam": {
         "knn": {

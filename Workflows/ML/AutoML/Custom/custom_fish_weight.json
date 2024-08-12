@@ -1,6 +1,4 @@
 {
-    "TrainTestSplitIndicator": true,
-    "TrainingSize": 0.7,
     "OutlierFilterIndicator": true,
     "OutlierFilterMethod": "tukey",
     "OutlierFilterParam": {
@@ -9,17 +7,17 @@
         }
     },
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "std",
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std"
+    },
     "HyperparameterTuningIndicator": true,
     "HyperparameterTuningParam": {
-        "xgboost": {
-            "max_depth": {
-                "Method": "REPLACE",
+        "decision_forest": {
+            "min_node_size": {
+                "Method": "ADD",
                 "Value": [
-                    4,
-                    5,
-                    8,
-                    10
+                    2,
+                    3
                 ]
             }
         }

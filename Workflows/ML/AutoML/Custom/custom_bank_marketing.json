@@ -4,7 +4,8 @@
         "day_of_month": {
             "Type": "Equal-Width",
             "NumOfBins": 4
-        }
+        },
+        "volatile": true
     },
     "CategoricalEncodingIndicator": true,
     "CategoricalEncodingParam": {
@@ -12,6 +13,11 @@
         "OrdinalEncodingList": [
             "education",
             "job"
-        ]
+        ],
+        "volatile": true
+    },
+    "FeatureScalingIndicator": true,
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std"
     }
 }

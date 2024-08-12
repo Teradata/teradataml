@@ -3,26 +3,21 @@
     "BincodeParam": {
         "age": {
             "Type": "Variable-Width",
-            "NumOfBins": 4,
+            "NumOfBins": 3,
             "Bin_1": {
                 "min_value": 0,
-                "max_value": 24,
+                "max_value": 29,
                 "label": "young"
             },
             "Bin_2": {
-                "min_value": 25,
-                "max_value": 49,
+                "min_value": 30,
+                "max_value": 59,
                 "label": "adult"
             },
             "Bin_3": {
-                "min_value": 50,
-                "max_value": 74,
+                "min_value": 60,
+                "max_value": 120,
                 "label": "old"
-            },
-            "Bin_4": {
-                "min_value": 75,
-                "max_value": 100,
-                "label": "older"
             }
         }
     },
@@ -37,9 +32,13 @@
         }
     },
     "AntiselectIndicator": true,
-    "AntiselectParam": [
-        "customer_id"
-    ],
+    "AntiselectParam": {
+        "excluded_columns": [
+            "customer_id"
+        ]
+    },
     "FeatureScalingIndicator": true,
-    "FeatureScalingMethod": "std"
+    "FeatureScalingParam": {
+        "FeatureScalingMethod": "std"
+    }
 }
