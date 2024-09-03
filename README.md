@@ -16,6 +16,118 @@ Copyright 2024, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 20.00.00.02
+
+* teradataml will no longer be supported with SQLAlchemy < 2.0.
+* teradataml no longer shows the warnings from Vantage by default. 
+  * Users should set `display.suppress_vantage_runtime_warnings` to `False` to display warnings.
+
+* ##### New Features/Functionality
+  * ##### teradataml: SQLE Engine Analytic Functions
+    * New Analytics Database Analytic Functions:
+      * `TFIDF()`
+      * `Pivoting()`
+      * `UnPivoting()`
+    * New Unbounded Array Framework(UAF) Functions:
+      * `AutoArima()`
+      * `DWT()`
+      * `DWT2D()`
+      * `FilterFactory1d()`  
+      * `IDWT()`
+      * `IDWT2D()`
+      * `IQR()`
+      * `Matrix2Image()`
+      * `SAX()`
+      * `WindowDFFT()`
+  * ###### teradataml: Functions
+      * `udf()` - Creates a user defined function (UDF) and returns ColumnExpression.
+      * `set_session_param()` is added to set the database session parameters. 
+      * `unset_session_param()` is added to unset database session parameters.
+  
+  * ###### teradataml: DataFrame
+      * `materialize()` - Persists DataFrame into database for current session.
+      * `create_temp_view()` - Creates a temporary view for session on the DataFrame.
+
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+      * _Date Time Functions_
+        * `DataFrameColumn.to_timestamp()` - Converts string or integer value to a TIMESTAMP data type or TIMESTAMP WITH TIME ZONE data type.
+        * `DataFrameColumn.extract()` - Extracts date component to a numeric value.
+        * `DataFrameColumn.to_interval()` - Converts a numeric value or string value into an INTERVAL_DAY_TO_SECOND or INTERVAL_YEAR_TO_MONTH value.
+      * _String Functions_
+        * `DataFrameColumn.parse_url()` - Extracts a part from a URL.
+      * _Arithmetic Functions_
+        * `DataFrameColumn.log` - Returns the logarithm value of the column with respect to 'base'.
+
+  * ##### teradataml: AutoML
+      * New methods added for `AutoML()`, `AutoRegressor()` and `AutoClassifier()`:
+        * `evaluate()` - Performs evaluation on the data using the best model or the model of users choice
+          from the leaderboard.
+        * `load()`: Loads the saved model from database.
+        * `deploy()`: Saves the trained model inside database.
+        * `remove_saved_model()`: Removes the saved model in database.
+        * `model_hyperparameters()`: Returns the hyperparameter of fitted or loaded models.
+
+* ##### Updates
+  * ##### teradataml: AutoML
+    * `AutoML()`, `AutoRegressor()`
+      * New performance metrics added for task type regression i.e., "MAPE", "MPE", "ME", "EV", "MPD" and "MGD".
+    * `AutoML()`, `AutoRegressor()` and `AutoClassifier`
+      * New arguments added: `volatile`, `persist`.
+      * `predict()` - Data input is now mandatory for generating predictions. Default model 
+      evaluation is now removed.
+  * `DataFrameColumn.cast()`: Accepts 2 new arguments `format` and `timezone`.
+  * `DataFrame.assign()`: Accepts ColumnExpressions returned by `udf()`.
+
+  * ##### teradataml: Options
+    * `set_config_params()`
+      * Following arguments will be deprecated in the future:
+        * `ues_url`
+        * `auth_token`
+
+  * ###### Database Utility
+      * `list_td_reserved_keywords()` - Accepts a list of strings as argument.
+
+  * ##### Updates to existing UAF Functions:
+    * `ACF()` - `round_results` parameter removed as it was used for internal testing.
+    * `BreuschGodfrey()` - Added default_value 0.05 for parameter `significance_level`.
+    * `GoldfeldQuandt()` - 
+      * Removed parameters  `weights` and `formula`.
+        Replaced parameter `orig_regr_paramcnt` with `const_term`.
+        Changed description for parameter `algorithm`. Please refer document for more details.
+      * Note: This will break backward compatibility.
+    * `HoltWintersForecaster()` - Default value of parameter `seasonal_periods` removed.
+    * `IDFFT2()` - Removed parameter `output_fmt_row_major` as it is used for internal testing.
+    * `Resample()` - Added parameter `output_fmt_index_style`.
+
+* ##### Bug Fixes
+  * KNN `predict()` function can now predict on test data which does not contain target column.
+  * Metrics functions are supported on the Lake system.
+  * The following OpensourceML functions from different sklearn modules are fixed.
+    * `sklearn.ensemble`:
+      * ExtraTreesClassifier - `apply()`
+      * ExtraTreesRegressor - `apply()`
+      * RandomForestClassifier - `apply()`
+      * RandomForestRegressor - `apply()`
+    * `sklearn.impute`:
+      * SimpleImputer - `transform()`, `fit_transform()`, `inverse_transform()`
+      * MissingIndicator - `transform()`, `fit_transform()`
+    * `sklearn.kernel_approximations`:
+      * Nystroem - `transform()`, `fit_transform()`
+      * PolynomialCountSketch - `transform()`, `fit_transform()`
+      * RBFSampler - `transform()`, `fit_transform()`
+    * `sklearn.neighbours`:
+      * KNeighborsTransformer - `transform()`, `fit_transform()`
+      * RadiusNeighborsTransformer - `transform()`, `fit_transform()`
+    * `sklearn.preprocessing`:
+      * KernelCenterer - `transform()`
+      * OneHotEncoder - `transform()`, `inverse_transform()`
+  * OpensourceML returns teradataml objects for model attributes and functions instead of sklearn
+    objects so that the user can perform further operations like `score()`, `predict()` etc on top
+    of the returned objects.
+  * AutoML `predict()` function now generates correct ROC-AUC value for positive class.
+  * `deploy()` method of `Script` and `Apply` classes retries model deployment if there is any 
+    intermittent network issues.
+
 #### teradataml 20.00.00.01
 * teradataml no longer supports Python versions less than 3.8.
 
