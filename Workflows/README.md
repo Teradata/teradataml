@@ -63,10 +63,11 @@ Copyright 2023, Teradata. All Rights Reserved.
     Regression__Insurance_Charges_Prediction.ipynb
 
 #### ML/HPT - contains workflows for Hyper Parameter Tuning
-    HyperParameter Tuning - Hyperparameter-Tuning Demo_UseCase_titanic.ipynb
+    Hyperparameter-Tuning Demo_UseCase_titanic.ipynb
 
 #### ML/OpenSourceML/sklearn - contains workflows for OpenSourceML with sklearn 
-    sklearn OpenSourceML - Sales_prediction_Using_OpenSource_ML_with_sklearn.ipynb
+    Sales_prediction_Using_OpenSource_ML_with_sklearn.ipynb
+    Demonstrating_sklearn_functions_using_OpensourceML.ipynb
 
 #### Visualization - contains workflows for teradataml plotting
     Plot - Visualization.ipynb 
