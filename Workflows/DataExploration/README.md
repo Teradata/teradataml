@@ -9,7 +9,8 @@ For Teradata customer support, please visit [Teradata Support](https://support.t
 Copyright 2023, Teradata. All Rights Reserved.
 
 ## Following workflows in the form of Jupyter notebooks are provided:
-    ##### Data_Exploration_Cleaning.ipynb
+    Data_Exploration_Cleaning.ipynb
+    Date_and_Time_functions.ipynb
 
 ## Documentation
 

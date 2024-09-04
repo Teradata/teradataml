@@ -20,6 +20,7 @@ Copyright 2023, Teradata. All Rights Reserved.
 
 #### DataExploration - contains workflows for various teradataml dataframe methods 
     Data Exploration and Cleaning - Data_Exploration_Cleaning.ipynb
+    Date and Time functions - Date_and_Time_functions.ipynb
 
 #### GeoSpatial - contains workflows for GeoDataFrame methods and properties
     GeoDataFrame methods and properties - GeoSpatial.ipynb
