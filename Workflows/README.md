@@ -70,6 +70,10 @@ Copyright 2023, Teradata. All Rights Reserved.
     Sales_prediction_Using_OpenSource_ML_with_sklearn.ipynb
     Demonstrating_sklearn_functions_using_OpensourceML.ipynb
 
+#### OpenAF - contains workflows for Open Analytics Framework functions
+    Create_env_using_snapshot.ipynb
+    Create_multiple_envs.ipynb
+
 #### Visualization - contains workflows for teradataml plotting
     Plot - Visualization.ipynb 
 
