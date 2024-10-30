@@ -70,12 +70,24 @@ Copyright 2023, Teradata. All Rights Reserved.
     Sales_prediction_Using_OpenSource_ML_with_sklearn.ipynb
     Demonstrating_sklearn_functions_using_OpensourceML.ipynb
 
+#### ML/OpenSourceML/lightgbm - contains workflows for OpenSourceML with lightgbm 
+    opensourceML_lightgbm_demo.ipynb
+
 #### OpenAF - contains workflows for Open Analytics Framework functions
     Create_env_using_snapshot.ipynb
     Create_multiple_envs.ipynb
 
 #### Visualization - contains workflows for teradataml plotting
     Plot - Visualization.ipynb 
+
+#### Feature Store
+    efs_getting_started.ipynb
+
+#### UDF
+    house_price_prediction_udf.ipynb
+    sentiment_analysis_udf.ipynb
+    udf_enterprise.ipynb
+    udf_lake.ipynb
 
 ## Documentation
 
