@@ -16,6 +16,186 @@ Copyright 2024, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+#### teradataml 20.00.00.03
+
+* teradataml no longer supports setting the `auth_token` using `set_config_params()`. Users should use `set_auth_token()` to set the token. 
+
+* ##### New Features/Functionality
+  * ###### teradataml: DataFrame
+    * New Function
+      * `alias()` - Creates a DataFrame with alias name.
+    * New Properties
+      * `db_object_name` - Get the underlying database object name, on which DataFrame is created.
+
+  * ###### teradataml: GeoDataFrame
+    * New Function
+      * `alias()` - Creates a GeoDataFrame with alias name.
+
+  * ###### teradataml: DataFrameColumn a.k.a. ColumnExpression
+    * _Arithmetic Functions_
+      * `DataFrameColumn.isnan()` - Function evaluates expression to determine if the floating-point
+                                    argument is a NaN (Not-a-Number) value.
+      * `DataFrameColumn.isinf()` - Function evaluates expression to determine if the floating-point
+                                    argument is an infinite number.
+      * `DataFrameColumn.isfinite()` - Function evaluates expression to determine if it is a finite
+                                       floating value.
+
+  * ###### FeatureStore - handles feature management within the Vantage environment
+    * FeatureStore Components
+      * Feature - Represents a feature which is used in ML Modeling. 
+      * Entity - Represents the columns which serves as uniqueness for the data used in ML Modeling. 
+      * DataSource - Represents the source of Data.
+      * FeatureGroup - Collection of Feature, Entity and DataSource.
+        * Methods
+          * `apply()` - Adds Feature, Entity, DataSource to a FeatureGroup.
+          * `from_DataFrame()` - Creates a FeatureGroup from teradataml DataFrame.
+          * `from_query()` - Creates a FeatureGroup using a SQL query.
+          * `remove()` - Removes Feature, Entity, or DataSource from a FeatureGroup.
+          * `reset_labels()` - Removes the labels assigned to the FeatureGroup, that are set using `set_labels()`.
+          * `set_labels()` - Sets the Features as labels for a FeatureGroup.
+        * Properties
+          * `features` - Get the features of a FeatureGroup.
+          * `labels` - Get the labels of FeatureGroup.
+    * FeatureStore 
+      * Methods
+        * `apply()` - Adds Feature, Entity, DataSource, FeatureGroup to FeatureStore.
+        * `archive_data_source()` - Archives a specified DataSource from a FeatureStore.
+        * `archive_entity()` - Archives a specified Entity from a FeatureStore.
+        * `archive_feature()` - Archives a specified Feature from a FeatureStore.
+        * `archive_feature_group()` - Archives a specified FeatureGroup from a FeatureStore. Method archives underlying Feature, Entity, DataSource also.
+        * `delete_data_source()` - Deletes an archived DataSource.
+        * `delete_entity()` - Deletes an archived Entity.
+        * `delete_feature()` - Deletes an archived Feature.
+        * `delete_feature_group()` - Deletes an archived FeatureGroup. 
+        * `get_data_source()` - Get the DataSources associated with FeatureStore.
+        * `get_dataset()` - Get the teradataml DataFrame based on Features, Entities and DataSource from FeatureGroup.
+        * `get_entity()` - Get the Entity associated with FeatureStore.
+        * `get_feature()` - Get the Feature associated with FeatureStore.
+        * `get_feature_group()` - Get the FeatureGroup associated with FeatureStore.
+        * `list_data_sources()` - List DataSources.
+        * `list_entities()` - List Entities.
+        * `list_feature_groups()` - List FeatureGroups.
+        * `list_features()` - List Features.
+        * `list_repos()` - List available repos which are configured for FeatureStore. 
+        * `repair()` - Repairs the underlying FeatureStore schema on database.  
+        * `set_features_active()` - Marks the Features as active.
+        * `set_features_inactive()` - Marks the Features as inactive.
+        * `setup()` - Setup the FeatureStore for a repo.
+      * Property
+        * `repo` - Property for FeatureStore repo.
+        * `grant` - Property to Grant access on FeatureStore to user.
+        * `revoke` - Property to Revoke access on FeatureStore from user.
+
+  * ###### teradataml: Table Operator Functions
+    * `Image2Matrix()` - Converts an image into a matrix.
+  
+  * ###### teradataml: SQLE Engine Analytic Functions
+    * New Analytics Database Analytic Functions:
+      * `CFilter()`
+      * `NaiveBayes()`
+      * `TDNaiveBayesPredict()`
+      * `Shap()`
+      * `SMOTE()`
+
+    * ###### teradataml: Unbounded Array Framework (UAF) Functions
+      * New Unbounded Array Framework(UAF) Functions:
+        * `CopyArt()`
+
+  * ###### General functions
+    * Vantage File Management Functions
+      * `list_files()` - List the installed files in Database.
+
+  * ###### OpensourceML: LightGBM
+    * teradataml adds support for lightGBM package through `OpensourceML` (`OpenML`) feature.
+      The following functionality is added in the current release:
+      * `td_lightgbm` - Interface object to run lightgbm functions and classes through Teradata Vantage.
+      Example usage below:
+        ```
+        from teradataml import td_lightgbm, DataFrame
+
+        df_train = DataFrame("multi_model_classification")
+
+        feature_columns = ["col1", "col2", "col3", "col4"]
+        label_columns = ["label"]
+        part_columns = ["partition_column_1", "partition_column_2"]
+
+        df_x = df_train.select(feature_columns)
+        df_y = df_train.select(label_columns)
+
+        # Dataset creation.
+        # Single model case.
+        obj_s = td_lightgbm.Dataset(df_x, df_y, silent=True, free_raw_data=False)
+
+        # Multi model case.
+        obj_m = td_lightgbm.Dataset(df_x, df_y, free_raw_data=False, partition_columns=part_columns)
+        obj_m_v = td_lightgbm.Dataset(df_x, df_y, free_raw_data=False, partition_columns=part_columns)
+
+        ## Model training.
+        # Single model case.
+        opt = td_lightgbm.train(params={}, train_set = obj_s, num_boost_round=30)
+
+        opt.predict(data=df_x, num_iteration=20, pred_contrib=True)
+
+        # Multi model case.
+        opt = td_lightgbm.train(params={}, train_set = obj_m, num_boost_round=30,
+                                callbacks=[td_lightgbm.record_evaluation(rec)],
+                                valid_sets=[obj_m_v, obj_m_v])
+        
+        # Passing `label` argument to get it returned in output DataFrame.
+        opt.predict(data=df_x, label=df_y, num_iteration=20)
+
+        ```
+      * Added support for accessing scikit-learn APIs using exposed inteface object `td_lightgbm`.
+    
+    Refer Teradata Python Package User Guide for more details of this feature, arguments, usage, examples and supportability in Vantage.
+
+  * ###### teradataml: Functions
+    * `register()` - Registers a user defined function (UDF).
+    * `call_udf()` - Calls a registered user defined function (UDF) and returns ColumnExpression.
+    * `list_udfs()` - List all the UDFs registered using 'register()' function.
+    * `deregister()` - Deregisters a user defined function (UDF).
+
+  * ###### teradataml: Options
+    * Configuration Options
+      * `table_operator` - Specifies the name of table operator.
+
+* ##### Updates
+  * ###### General functions
+    * `set_auth_token()` - Added `base_url` parameter which accepts the CCP url. 
+                           'ues_url' will be deprecated in future and users
+                           will need to specify 'base_url' instead.
+
+  * ###### teradataml: DataFrame function
+     * `join()`
+       * Now supports compound ColumExpression having more than one binary operator in `on` argument.
+       * Now supports ColumExpression containing FunctionExpression(s) in `on` argument.
+       * self-join now expects aliased DataFrame in `other` argument.
+
+  * ###### teradataml: GeoDataFrame function
+     * `join()`
+       * Now supports compound ColumExpression having more than one binary operator in `on` argument.
+       * Now supports ColumExpression containing FunctionExpression(s) in `on` argument.
+       * self-join now expects aliased DataFrame in `other` argument.
+
+  * ###### teradataml: Unbounded Array Framework (UAF) Functions
+    * `SAX()` - Default value added for `window_size` and `output_frequency`.
+    * `DickeyFuller()`
+      * Supports TDAnalyticResult as input.
+      * Default value added for `max_lags`.
+      * Removed parameter `drift_trend_formula`.
+      * Updated permitted values for `algorithm`.
+
+  * ##### teradataml: AutoML
+    * `AutoML`, `AutoRegressor` and `AutoClassifier`
+      * Now supports DECIMAL datatype as input.
+  
+  * ##### teradataml: SQLE Engine Analytic Functions
+    * `TextParser()`
+      * Argument name `covert_to_lowercase` changed to `convert_to_lowercase`.
+
+* ##### Bug Fixes
+  * `db_list_tables()` now returns correct results when '%' is used.
+
 #### teradataml 20.00.00.02
 
 * teradataml will no longer be supported with SQLAlchemy < 2.0.
