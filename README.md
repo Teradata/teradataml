@@ -16,6 +16,7 @@ Copyright 2024, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+
 #### teradataml 20.00.00.03
 
 * teradataml no longer supports setting the `auth_token` using `set_config_params()`. Users should use `set_auth_token()` to set the token. 
@@ -263,6 +264,10 @@ Copyright 2024, Teradata. All Rights Reserved.
       * Following arguments will be deprecated in the future:
         * `ues_url`
         * `auth_token`
+  
+  * #### teradata DataFrame
+    * `to_pandas()` - Function returns the pandas dataframe with Decimal columns types as float instead of object.
+                      If user want datatype to be object, set argument `coerce_float` to False.
 
   * ###### Database Utility
       * `list_td_reserved_keywords()` - Accepts a list of strings as argument.
@@ -282,7 +287,7 @@ Copyright 2024, Teradata. All Rights Reserved.
 * ##### Bug Fixes
   * KNN `predict()` function can now predict on test data which does not contain target column.
   * Metrics functions are supported on the Lake system.
-  * The following OpensourceML functions from different sklearn modules are fixed.
+  * The following OpensourceML functions from different sklearn modules in single model case are fixed.
     * `sklearn.ensemble`:
       * ExtraTreesClassifier - `apply()`
       * ExtraTreesRegressor - `apply()`
@@ -295,12 +300,21 @@ Copyright 2024, Teradata. All Rights Reserved.
       * Nystroem - `transform()`, `fit_transform()`
       * PolynomialCountSketch - `transform()`, `fit_transform()`
       * RBFSampler - `transform()`, `fit_transform()`
-    * `sklearn.neighbours`:
+    * `sklearn.neighbors`:
       * KNeighborsTransformer - `transform()`, `fit_transform()`
       * RadiusNeighborsTransformer - `transform()`, `fit_transform()`
     * `sklearn.preprocessing`:
       * KernelCenterer - `transform()`
       * OneHotEncoder - `transform()`, `inverse_transform()`
+  * The following OpensourceML functions from different sklearn modules in multi model case are fixed.
+    * `sklearn.feature_selection`:
+      * SelectFpr - `transform()`, `fit_transform()`, `inverse_transform()`
+      * SelectFdr - `transform()`, `fit_transform()`, `inverse_transform()`
+      * SelectFromModel - `transform()`, `fit_transform()`, `inverse_transform()`
+      * SelectFwe - `transform()`, `fit_transform()`, `inverse_transform()`
+      * RFECV - `transform()`, `fit_transform()`, `inverse_transform()`
+    * `sklearn.clustering`:
+      * Birch - `transform()`, `fit_transform()`
   * OpensourceML returns teradataml objects for model attributes and functions instead of sklearn
     objects so that the user can perform further operations like `score()`, `predict()` etc on top
     of the returned objects.
