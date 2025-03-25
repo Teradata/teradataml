@@ -7,7 +7,7 @@ For community support, please visit the [Teradata Community](https://support.ter
 
 For Teradata customer support, please visit [Teradata Support](https://support.teradata.com/csm).
 
-Copyright 2023, Teradata. All Rights Reserved.
+Copyright 2025, Teradata. All Rights Reserved.
 
 ## Following workflows in the form of Jupyter notebooks are provided:
     ##### Model training and scoring using XGBOOST - Credit_Card_fraud_XGBoost.ipynb

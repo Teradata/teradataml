@@ -6,7 +6,7 @@ For community support, please visit the [Teradata Community](https://support.ter
 
 For Teradata customer support, please visit [Teradata Support](https://support.teradata.com/csm).
 
-Copyright 2024, Teradata. All Rights Reserved.
+Copyright 2025, Teradata. All Rights Reserved.
 
 ### Table of Contents
 * [Release Notes](#release-notes)
@@ -16,6 +16,125 @@ Copyright 2024, Teradata. All Rights Reserved.
 * [License](#license)
 
 ## Release Notes:
+
+#### teradataml 20.00.00.04
+* ##### New Features/Functionality
+    * ###### teradataml OTF Support:
+      * This release has enabled the support for accessing OTF data from teradataml.
+      * User can now create a teradataml DataFrame on OTF table, allowing user to use teradataml functions.
+        * Example usage below:
+          * Creation of view on OTF/datalake table is not supported. Hence, user has to set `configure.temp_object_type` to `VT` using below-mentioned statement.
+            ```configure.temp_object_type = "VT"```
+          * User needs to provide additional information about datalake while creating the DataFrame. There are two approaches to provide datalake information
+            * Approach 1: Using `in_schema()`
+              ```
+              >>> from teradataml.dataframe.dataframe import in_schema
+              # Create an in_schema object to privide additional information about datalake.
+              >>> in_schema_tbl = in_schema(schema_name="datalake_db",
+              ...                           table_name="datalake_table_name",
+              ...                           datalake_name="datalake")
+              >>> otf_df = DataFrame(in_schema_tbl)
+                ```
+            * Approach 2: Using `DataFrame.from_table()`
+              ```
+               >>> otf_df = DataFrame.from_table(table_name = "datalake_table_name",
+               ...                               schema_name="datalake_db",
+               ...                               datalake_name="datalake")
+              ```
+          * Once this DataFrame is created, users can use any DataFrame method or analytics features/functionality from teradataml with it. Visit Limitations and considerations section in _Teradata Python Package User Guide_ to check the supportability.
+            *  Note: All further operations create volatile tables in local database.
+               ```
+                >>> new_df = otf_df.assign(new_col=otf_df.existing_col*2)
+               ```
+  * ###### teradataml: DataFrame
+    * Introduced a new feature 'Exploratory Data Analysis UI' (EDA-UI), which enhances
+      the user experience of teradataml with Jupyter notebook. EDA-UI is displayed by default
+      when a teradataml DataFrame is printed in the Jupyter notebook.
+    * User can control the EDA-UI using a new configuration option `display.enable_ui`.
+      It can be disabled by setting `display.enable_ui` to False.
+    * New Function
+      * `get_output()` is added to get the result of Analytic function when executed from EDA UI.
+
+  * ###### OpensourceML
+    * `td_lightgbm` - A teradataml OpenSourceML module
+      * `deploy()` - User can now deploy the models created by lightgbm `Booster` and `sklearn` modules. Deploying the model stores the model in Vantage for future use with `td_lightgbm`.
+        * `td_lightgbm.deploy()` - Deploy the lightgbm `Booster` or any `scikit-learn` model trained outside Vantage.
+        * `td_lightgbm.train().deploy()` - Deploys the lightgbm `Booster` object trained within Vantage.
+        * `td_lightgbm.<sklearn_class>().deploy()` - Deploys lightgbm's sklearn class object created/trained within Vantage.
+      * `load()` - User can load the deployed models back in the current session. This allows user to use the lightgbm functions with the `td_lightgbm` module.
+        * `td_lightgbm.load()` - Load the deployed model in the current session.
+
+  * ###### FeatureStore
+    * New function `FeatureStore.delete()` is added to drop the Feature Store and corresponding repo from Vantage.
+
+  * ###### Database Utility
+    * `db_python_version_diff()` - Identifies the Python interpreter major version difference between the interpreter installed on Vantage vs interpreter on the local user environment.
+    * `db_python_package_version_diff()` - Identifies the Python package version difference between the packages installed on Vantage vs the local user environment.
+
+  * ###### BYOM Function
+    * `ONNXEmbeddings()` - Calculate embeddings values in Vantage using an embeddings model that has been created outside Vantage and stored in ONNX format.
+
+  * ###### teradataml Options
+      * Configuration Options
+        * `configure.temp_object_type` - Allows user to choose between creating volatile tables or views for teradataml internal use. By default, teradataml internally creates the views for some of the operations. Now, with new configuration option, user can opt to create Volatile tables instead of views. This provides greater flexibility for users who lack the necessary permissions to create view or need to create views on tables without WITH GRANT permissions.
+      * Display Options
+        * `display.enable_ui` - Specifies whether to display exploratory data analysis UI when DataFrame is printed. By default, this option is enabled (True), allowing exploratory data analysis UI to be displayed. When set to False, exploratory data analysis UI is hidden.
+
+* ##### Updates
+  * ###### teradataml: DataFrame function
+    * `describe()`
+      * New argument added: `pivot`.
+      * When argument `pivot` is set to False, Non-numeric columns are no longer supported for generating statistics.
+        Use `CategoricalSummary` and `ColumnSummary`.
+    * `fillna()` - Accepts new argument `partition_column` to partition the data and impute null values accordingly.
+    * Optimised performance for `DataFrame.plot()`.
+      * `DataFrame.plot()` will not regenerate the image when run more than once with same arguments.
+    * `DataFrame.from_table()`: New argument `datalake_name` added to accept datalake name while creating DataFrame on datalake table.
+
+  * ###### teradataml: DataFrame Utilities
+    * `in_schema()`: New argument `datalake_name` added to accept datalake name.
+
+  * ###### Table Operator
+    * `Apply()` no longer looks at authentication token by default. Authentication token is now required only if user wants to consume Open Analytics Framework REST APIs.
+
+  * ###### Hyper Parameter Tuner
+    * `GridSearch()` and `RandomSearch()` now displays a message to refer to `get_error_log()` api when model training fails in HPT.
+
+  * ###### teradataml Options
+    * Configuration Options
+      * `configure.indb_install_location`
+        Determines the installation location of the In-DB Python package based on the installed RPM version.
+
+  * ###### teradataml Context Creation
+    * `create_context()` - Enables user to create connection using either parameters set in environment or config file, in addition to previous method. Newly added options help users to hide the sensitive data from the script.
+
+  * ###### Open Analytics Framework
+    * Enhanced the `create_env()` to display a message when an invalid base_env is passed, informing users that the default base_env is being used.
+
+  * ###### OpensourceML
+    * Raises a TeradataMlException, if the Python interpreter major version is different between the Vantage Python environment and the local user environment.
+    * Displays a warning, if specific Python package versions are different between the Vantage Python environment and the local user environment.
+
+  * ###### Database Utility
+    * `db_list_tables()`: New argument `datalake_name` added to accept datalake name to list tables from.
+    * `db_drop_table()`:
+      * New argument `datalake_name` added to accept datalake name to drop tables from.
+      * New argument `purge` added to specify whether to use `PURGE ALL` or `NO PURGE` clause while dropping table.
+
+* ##### Bug Fixes
+  * `td_lightgbm` OpensourceML module: In multi model case, `td_lightgbm.Dataset().add_features_from()` function should add features of one partition in first Dataset to features of the same partition in second Dataset. This is not the case before and this function fails. Fixed this now.
+  * Fixed a minor bug in the `Shap()` and converted argument `training_method` to required argument.
+  * Fixed PCA-related warnings in `AutoML`.
+  * `AutoML` no longer fails when data with all categorical columns are provided.
+  * Fixed `AutoML` issue with upsampling method.
+  * Excluded the identifier column from outlier processing in `AutoML`.
+  * `DataFrame.set_index()` no longer modifies the original DataFrame's index when argument `append` is used.
+  * `concat()` function now supports the DataFrame with column name starts with digit or contains special characters or contains reserved keywords.
+  * `create_env()` proceeds to install other files even if current file installation fails.
+  * Corrected the error message being raised in `create_env()` when authentication token is not set.
+  * Added missing argument `charset` for Vantage Analytic Library functions.
+  * New argument `seed` is added to `AutoML`, `AutoRegressor` and `AutoClassifier` to ensure consistency on result.
+  * Analytic functions now work even if name of columns for underlying tables has non-ascii characters.
 
 #### teradataml 20.00.00.03
 
