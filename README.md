@@ -95,7 +95,7 @@ Copyright 2025, Teradata. All Rights Reserved.
     * `in_schema()`: New argument `datalake_name` added to accept datalake name.
 
   * ###### Table Operator
-    * `Apply()` no longer looks at authentication token by default. Authentication token is now required only if user want to update backend Open Analytics Framework service.
+    * `Apply()` no longer looks at authentication token by default. Authentication token is now required only if user wants to consume Open Analytics Framework REST APIs.
 
   * ###### Hyper Parameter Tuner
     * `GridSearch()` and `RandomSearch()` now displays a message to refer to `get_error_log()` api when model training fails in HPT.
@@ -131,10 +131,10 @@ Copyright 2025, Teradata. All Rights Reserved.
   * `DataFrame.set_index()` no longer modifies the original DataFrame's index when argument `append` is used.
   * `concat()` function now supports the DataFrame with column name starts with digit or contains special characters or contains reserved keywords.
   * `create_env()` proceeds to install other files even if current file installation fails.
-  * Corrected the error message being raised in `create_env()` when authentication is not set.
+  * Corrected the error message being raised in `create_env()` when authentication token is not set.
   * Added missing argument `charset` for Vantage Analytic Library functions.
   * New argument `seed` is added to `AutoML`, `AutoRegressor` and `AutoClassifier` to ensure consistency on result.
-  * Analytic functions now work even if name of columns for underlying tables is non-ascii characters.
+  * Analytic functions now work even if name of columns for underlying tables has non-ascii characters.
 
 #### teradataml 20.00.00.03
 
