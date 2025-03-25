@@ -7,7 +7,7 @@ For community support, please visit the [Teradata Community](https://support.ter
 
 For Teradata customer support, please visit [Teradata Support](https://support.teradata.com/csm).
 
-Copyright 2023, Teradata. All Rights Reserved.
+Copyright 2025, Teradata. All Rights Reserved.
 
 ## Following workflows in the form of Jupyter notebooks are provided:
 
@@ -21,6 +21,13 @@ Copyright 2023, Teradata. All Rights Reserved.
 #### DataExploration - contains workflows for various teradataml dataframe methods 
     Data Exploration and Cleaning - Data_Exploration_Cleaning.ipynb
     Date and Time functions - Date_and_Time_functions.ipynb
+
+#### DataTransferUtilities - contains workflows for moving data between teradata database and various external sources
+    Exporting the data outside vantage - Data_export_APIs.ipynb
+    Loading the data into vantage - Data_loading_APIs.ipynb
+
+#### FeatureStore - contains workflows for FeatureStore utility
+    Getting started with FeatureStore - efs_getting_started.ipynb
 
 #### GeoSpatial - contains workflows for GeoDataFrame methods and properties
     GeoDataFrame methods and properties - GeoSpatial.ipynb
@@ -77,17 +84,15 @@ Copyright 2023, Teradata. All Rights Reserved.
     Create_env_using_snapshot.ipynb
     Create_multiple_envs.ipynb
 
-#### Visualization - contains workflows for teradataml plotting
-    Plot - Visualization.ipynb 
-
-#### Feature Store
-    efs_getting_started.ipynb
-
 #### UDF
     house_price_prediction_udf.ipynb
     sentiment_analysis_udf.ipynb
     udf_enterprise.ipynb
     udf_lake.ipynb
+
+#### Visualization - contains workflows for teradataml plotting
+    Plot - Visualization.ipynb
+
 
 ## Documentation
 
