@@ -79,6 +79,8 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 #### ML/OpenSourceML/lightgbm - contains workflows for OpenSourceML with lightgbm 
     opensourceML_lightgbm_demo.ipynb
+    opensourceML_lightgbm_deploy_load.ipynb
+
 
 #### OpenAF - contains workflows for Open Analytics Framework functions
     Create_env_using_snapshot.ipynb
