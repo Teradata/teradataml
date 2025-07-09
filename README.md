@@ -17,6 +17,102 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+#### teradataml 20.00.00.06
+* ##### New Features/Functionality
+  * ###### teradataml: SDK
+    * Added new client `teradataml.sdk.Client` which can be used by user to make REST calls through SDK.
+    * New exception added in `teradataml`, specifically for REST APIs `TeradatamlRestException` that has attribute `json_resonse` providing proper printable json.
+    * Exposed three different ways of authentication through `Client`.
+      * Client credentials Authentication through `ClientCredentialsAuth` class.
+      * Device code Authentication through `DeviceCodeAuth` class.
+      * Bearer Authentication through `BearerAuth` class.
+
+  * ###### teradataml: ModelOps SDK
+    * `teradataml` exposes Python interfaces for all the REST APIs provided by Teradata Vantage ModelOps.
+    * Added support for `blueprint()` method which prints available classes in `modelops` module.
+    * Added new client `ModelOpsClient` with some additional function compared to `teradataml.sdk.Client`.
+    * teradataml classes are added for the schema in ModelOps OpenAPI specification.
+    ```python
+    >>> from teradataml.sdk.modelops import ModelOpsClient, Projects
+    >>> from teradataml.common.exceptions import TeradatamlRestException
+    >>> from teradataml.sdk import DeviceCodeAuth, BearerAuth, ClientCredentialsAuth # Authentication related classes.
+    >>> from teradataml.sdk.modelops import models # All classes related to OpenAPI schema are present in this module.
+
+    # Print available classes in modelops module.
+    >>> from teradataml.sdk.modelops import blueprint
+    >>> blueprint()
+
+    # Create ClientCredentialsAuth object and create ModelOpsClient object.
+    >>> cc_obj = ClientCredentialsAuth(auth_client_id="<client_id>",
+                                       auth_client_secret="<client_secret>",
+                                       auth_token_url="https://<example.com>/token")
+    >>> client = ModelOpsClient(base_url="<base_url>", auth=cc_obj, ssl_verify=False)
+
+    # Create Projects object.
+    >>> p = Projects(client=client)
+
+    # Create project using `body` argument taking object of ProjectRequestBody.
+    >>> project_paylod = {
+            "name": "dummy_project",
+            "description": "dummy_project created for testing",
+            "groupId": "<group_ID>",
+            "gitRepositoryUrl": "/app/built-in/empty",
+            "branch": "<branch>"
+        }
+    >>> p.create_project(body=models.ProjectRequestBody(**project_payload))
+    ```
+
+  * ###### teradataml: Functions
+    * `get_formatters()` - Get the formatters for NUMERIC, DATE and CHAR types.
+
+  * ###### teradataml: DataFrame Methods
+    * `get_snapshot()` - Gets the snapshot data of a teradataml DataFrame created on OTF table for a given snapshot id or timestamp.
+    * `from_pandas()`: Creates a teradataml DataFrame from a pandas DataFrame.
+    * `from_records()`: Creates a teradataml DataFrame from a list.
+    * `from_dict()`: Creates a teradataml DataFrame from a dictionary.
+
+  * ###### teradataml: DataFrame Property
+    * `history` - Returns snapshot history for a DataFrame created on OTF table.
+    * `manifests` - Returns manifest information for a DataFrame created on OTF table.
+    * `partitions` - Returns partition information for a DataFrame created on OTF table.
+    * `snapshots` - Returns snapshot information for a DataFrame created on OTF table.
+
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * `DataFrameColumn.rlike()` - Function to match a string against a regular expression pattern.
+    * `DataFrameColumn.substring_index()` - Function to return the substring from a column before a specified 
+    delimiter, up to a given occurrence count.
+    * `DataFrameColumn.count_delimiters()` - Function to count the total number of occurrences of a specified delimiter.
+
+* ##### Updates
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * `DataFrameColumn.like()`
+      * Added argument `escape_char` to specify the escape character for the LIKE pattern.
+      * Argument `pattern` now accepts DataFrameColumn as input.
+    * `DataFrameColumn.ilike()`
+      * Added argument `escape_char` to specify the escape character for the ILIKE pattern.
+      * Argument `pattern` now accepts DataFrameColumn as input.
+    * `DataFrameColumn.parse_url()` - Added argument `key` to extract a specific query parameter when `url_part` is set to "QUERY".
+
+  * ###### teradataml: DataFrame function
+    * `groupby()`, `cube()` and `rollup()`
+       * Added argument `include_grouping_columns` to include aggregations on the grouping column(s).
+    * `DataFrame()`: New argument `data`, that accepts input data to create a teradataml DataFrame, is added.
+
+  * ###### General functions
+    * `set_auth_token()`
+      * New keyword argument `auth_url` accepts the endpoint URL for a keycloak server.
+      * New keyword argument `rest_client` accepts name of the service for which keycloak token is to be generated.
+      * New keyword argument `validate_jwt` accepts the boolean flag to decide whether to validate generated JWT token or not.
+      * New keyword argument `valid_from` accepts the epoch seconds representing time from which JWT token will be valid.
+
+  * ###### teradataml Options
+    * Configuration Options
+      * `configure.use_short_object_name`
+        Specifies whether to use a shorter name for temporary database objects which are created by teradataml internally.
+
+  * ###### BYOM Function
+    * Supports special characters.
+
 #### teradataml 20.00.00.05
 * ##### New Features/Functionality
   * ##### teradataml: AutoML
