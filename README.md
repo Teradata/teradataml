@@ -17,6 +17,216 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+#### teradataml 20.00.00.07
+* ##### New Features/Functionality
+  * ###### teradataml: DataFrame
+    * `DataFrame.df_type` - Added new property `df_type` to know the type of the DataFrame.
+    * `DataFrame.as_of()` - Added new function which supports temporal time qualifiers on teradataml DataFrame.
+    * `DataFrame.closed_rows()` - Added a new function to retrieve closed rows from a DataFrame created on a transaction-time or bi-temporal table/view.
+    * `DataFrame.open_rows()` - Added a new function to retrieve open rows from a DataFrame created on a transaction-time or bi-temporal table/view.
+    * `DataFrame.historic_rows()` - Added a new function to retrieve historical rows from a DataFrame created on a valid-time or bi-temporal table/view.
+    * `DataFrame.future_rows()` - Added a new function to retrieve future rows from a DataFrame created on a valid-time or bi-temporal table/view.
+    * `DataFrame.create_view()` - Creates a view from the DataFrame object. This function helps the user to persist the DataFrame as a view, which can be used across sessions.
+    * Added argument `persist` to `DataFrame.from_dict()`, `DataFrame.from_pandas()`, and `DataFrame.from_records()` to persist the created DataFrame.
+
+  * ###### teradataml DataFrameColumn a.k.a. ColumnExpression
+    * `DataFrameColumn.begin()` - Function to get beginning date or timestamp from a PERIOD column.
+    * `DataFrameColumn.end()` - Function to get ending date or timestamp from a PERIOD column.
+    * `DataFrameColumn.between()` - Function to check if the column value is between the lower and upper bounds.
+
+  * ###### teradataml: Functions
+    * `current_date()` - Gets the current date based on the specified time zone.
+    * `current_timestamp()` - Gets the current timestamp based on the specified time zone.
+
+  * ###### teradataml: General Functions
+    * Data Transfer Utility
+      * `copy_to_sql()`
+          * A new argument `partition_by` partitions the index while writing to Teradata Vantage.
+          * A new argument `partition_by_case` handles different cases for partitioning the index while writing to Teradata Vantage.
+          * A new argument `partition_by_range` partitions the data based on a range while writing to Teradata Vantage.
+          * A new argument `sub_partition` subpartitions the main partition according to the provided value.
+          * New keyword arguments `valid_time_columns` and `derived_column` helps to copy the data into temporal tables.
+          
+  * ###### Enterprise Feature Store
+    * `FeatureStore` - Main class for managing Feature Store operations with comprehensive methods and properties.
+      * Methods:
+        * `apply()` - Adds Feature, Entity, DataSource, FeatureGroup to FeatureStore.
+        * `archive_data_source()` - Archives a specified DataSource.
+        * `archive_entity()` - Archives a specified Entity.
+        * `archive_feature()` - Archives a specified Feature.
+        * `archive_feature_group()` - Archives a specified FeatureGroup.
+        * `archive_feature_process()` - Archives a specified FeatureProcess.
+        * `delete()` - Deletes the FeatureStore and all its components.
+        * `delete_data_source()` - Deletes an archived DataSource.
+        * `delete_entity()` - Deletes an archived Entity.
+        * `delete_feature()` - Deletes an archived Feature.
+        * `delete_feature_group()` - Deletes an archived FeatureGroup.
+        * `delete_feature_process()` - Deletes an archived FeatureProcess.
+        * `get_data()` - Gets data based on features, entities, and processes.
+        * `get_data_domain()` - Retrieves DataDomain object.
+        * `get_data_source()` - Gets DataSources associated with FeatureStore.
+        * `get_dataset_catalog()` - Retrieves the DatasetCatalog object.
+        * `get_entity()` - Gets Entity associated with FeatureStore.
+        * `get_feature()` - Gets Feature associated with FeatureStore.
+        * `get_feature_group()` - Gets FeatureGroup associated with FeatureStore.
+        * `get_feature_process()` - Retrieves FeatureProcess based on arguments.
+        * `get_feature_catalog()` - Retrieves FeatureCatalog object.
+        * `get_group_features()` - Gets features from a specific feature group.
+        * `list_data_sources()` - Lists DataSources in the FeatureStore.
+        * `list_entities()` - Lists Entities in the FeatureStore.
+        * `list_feature_groups()` - Lists FeatureGroups in the FeatureStore.
+        * `list_features()` - Lists Features in the FeatureStore.
+        * `list_feature_processes()` - Lists all feature processes in the repo.
+        * `list_feature_runs()` - Lists feature process runs and execution status.
+        * `list_feature_catalogs()` - Lists all feature catalogs in the repo.
+        * `list_data_domains()` - Lists all data domains in the repo.
+        * `list_dataset_catalogs()` - Lists all dataset catalogs in the repo.
+        * `list_repos()` - Lists available repos configured for FeatureStore.
+        * `mind_map()` - Generates a mind map visualization of the feature store structure.
+        * `remove_data_domain()` - Removes the data domain from the feature store.
+        * `repair()` - Repairs the underlying FeatureStore schema on database.
+        * `set_features_active()` - Marks Features as active.
+        * `set_features_inactive()` - Marks Features as inactive.
+        * `setup()` - Sets up the FeatureStore for a repository.
+      * Properties:
+        * `data_domain` - Gets or sets the data domain of feature store.
+        * `grant` - Grants access to the FeatureStore.
+        * `repo` - Gets or sets the repository name.
+        * `revoke` - Revokes access from the FeatureStore.
+        * `version` - Gets the version of the FeatureStore.
+    * `FeatureGroup` - Represents a group of features with methods and properties.
+      * Methods:
+        * `apply()` - Applies the feature group to objects.
+        * `from_DataFrame()` - Creates a FeatureGroup from a DataFrame.
+        * `from_query()` - Creates a FeatureGroup from a query.
+        * `ingest_features()` - Ingests features from the FeatureGroup into the FeatureStore.
+        * `remove_feature()` - Removes a feature from the FeatureGroup.
+        * `reset_labels()` - Resets the labels of the FeatureGroup.
+        * `set_labels()` - Sets the labels of the FeatureGroup.
+      * Properties:
+        * `features` - Gets the features in the FeatureGroup.
+        * `labels` - Gets or sets the labels of the FeatureGroup.
+    * `DataDomain` - Represents a data domain within the FeatureStore with properties.
+      * Properties:
+        * `entities` - Gets the entities in the data domain.
+        * `features` - Gets the features in the data domain.
+        * `processes` - Gets the feature processes in the data domain.
+        * `datasets` - Gets the datasets in the data domain.
+    * `FeatureCatalog` - Manages features within a specific data domain.
+      * Methods:
+        * `upload_features()` - Uploads features to the catalog.
+        * `list_features()` - Lists features in the catalog.
+        * `list_feature_versions()` - Lists feature versions in the catalog.
+        * `archive_features()` - Archives features in the catalog.
+        * `delete_features()` - Deletes features from the catalog.
+      * Properties:
+        * `data_domain` - Gets the data domain of the catalog.
+        * `features` - Gets the features in the catalog.
+        * `entities` - Gets the entities in the catalog.
+    * `DatasetCatalog` - Manages datasets within a specific data domain.
+      * Methods:
+        * `build_dataset()` - Builds a dataset from features and entities.
+        * `build_time_series()` - Builds a time series dataset.
+        * `list_datasets()` - Lists datasets in the catalog.
+        * `list_entities()` - Lists entities available for dataset building.
+        * `list_features()` - Lists features available for dataset building.
+        * `get_dataset()` - Gets a specific dataset by ID.
+        * `archive_datasets()` - Archives datasets in the catalog.
+        * `delete_datasets()` - Deletes datasets from the catalog.
+      * Properties:
+        * `data_domain` - Gets the data domain of the catalog.
+    * `Dataset` - Represents a specific dataset in the catalog.
+      * Properties:
+        * `features` - Gets the features in the dataset.
+        * `entity` - Gets the entity of the dataset.
+        * `view_name` - Gets the view name of the dataset.
+        * `id` - Gets the ID of the dataset.
+    * `FeatureProcess` - Represents a feature processing workflow.
+      * Methods:
+        * `run()` - Executes the feature process with optional filters and as_of parameters.
+      * Properties:
+        * `process_id` - Gets the process ID.
+        * `df` - Gets the DataFrame associated with the process.
+        * `features` - Gets the features in the process.
+        * `entity` - Gets the entity in the process.
+        * `data_domain` - Gets the data domain of the process.
+        * `filters` - Gets the filters applied to the process.
+        * `as_of` - Gets the as_of parameter of the process.
+        * `description` - Gets the description of the process.
+        * `start_time` - Gets the start time of the process.
+        * `end_time` - Gets the end time of the process.
+        * `status` - Gets the status of the process.
+
+  * ###### OpensourceML
+    * `td_sklearn` - Now supports input from OTF tables.
+
+  * ###### BYOM Function
+    * `ONNXSeq2Seq()` - Applies sequence-to-sequence model in Vantage that has been created outside Vantage and stored in ONNX format.
+
+  * ###### teradataml: AutoFraud (Automated Machine Learning - Fraud Detection)
+    `AutoFraud` is a special purpose AutoML pipeline designed for fraud detection tasks. It automates the end-to-end process of data preprocessing, feature engineering, model training, evaluation, and deployment to efficiently identify fraudulent activities.
+    * Methods:
+      * `__init__()` - Instantiates an object of AutoFraud.
+      * `fit()` - Performs fit on specified data and target column.
+      * `leaderboard()` - Gets the leaderboard for the AutoFraud pipeline, with diverse models, feature selection methods, and performance metrics.
+      * `leader()` - Shows best performing model and its details such as feature selection method and performance metrics.
+      * `predict()` - Performs prediction on the data using the best model or the model of user's choice from the leaderboard.
+      * `evaluate()` - Performs evaluation on the data using the best model or the model of user's choice from the leaderboard.
+      * `load()` - Loads the saved model from database.
+      * `deploy()` - Saves the trained model inside database.
+      * `remove_saved_model()` - Removes the saved model in database.
+      * `model_hyperparameters()` - Returns the hyperparameters of fitted or loaded models.
+      * `get_persisted_tables()` - Lists the persisted tables created during AutoFraud execution.
+      * `visualize()` - Generates visualizations to analyze and understand the underlying patterns in the data.
+      * `generate_custom_config()` - Generates custom config JSON file required for customized run of AutoFraud.
+
+  * ###### teradataml: AutoChurn (Automated Machine Learning - Churn Prediction)
+    `AutoChurn` is a special purpose AutoML pipeline for customer churn prediction. It automates the end-to-end process of data preprocessing, feature engineering, model training, evaluation, and deployment to efficiently identify customers likely to churn.
+    * Methods:
+      * `__init__()` - Instantiates an object of AutoChurn.
+      * `fit()` - Performs fit on specified data and target column.
+      * `leaderboard()` - Gets the leaderboard for the AutoChurn pipeline, with diverse models, feature selection methods, and performance metrics.
+      * `leader()` - Shows best performing model and its details such as feature selection method and performance metrics.
+      * `predict()` - Performs prediction on the data using the best model or the model of user's choice from the leaderboard.
+      * `evaluate()` - Performs evaluation on the data using the best model or the model of user's choice from the leaderboard.
+      * `load()` - Loads the saved model from database.
+      * `deploy()` - Saves the trained model inside database.
+      * `remove_saved_model()` - Removes the saved model in database.
+      * `model_hyperparameters()` - Returns the hyperparameters of fitted or loaded models.
+      * `get_persisted_tables()` - Lists the persisted tables created during AutoChurn execution.
+      * `visualize()` - Generates visualizations to analyze and understand the underlying patterns in the data.
+      * `generate_custom_config()` - Generates custom config JSON file required for customized run of AutoChurn.
+
+  * ###### teradataml: AutoCluster (Automated Machine Learning - Clustering)
+    `AutoCluster` is a special purpose AutoML pipeline for clustering analysis. It automates the end-to-end process of data preprocessing, feature engineering, model training, and prediction to efficiently group data into clusters and extract insights from unlabeled datasets.
+    * Methods:
+      * `__init__()` - Instantiates an object of AutoCluster.
+      * `fit()` - Performs fit on specified data.
+      * `leaderboard()` - Gets the leaderboard for the AutoCluster pipeline, with diverse models, feature selection methods, and performance metrics.
+      * `leader()` - Shows best performing model and its details such as feature selection method and performance metrics.
+      * `predict()` - Performs prediction (cluster assignment) on the data using the best model or the model of user's choice from the leaderboard.
+      * `model_hyperparameters()` - Returns the hyperparameters of fitted or loaded models.
+      * `get_persisted_tables()` - Lists the persisted tables created during AutoCluster execution.
+      * `generate_custom_config()` - Generates custom config JSON file required for customized run of AutoCluster.
+
+* ##### Updates
+  * ###### teradataml: Functions
+    * `udf()` -  Added support for `td_buffer` to cache the data in the user defined function. 
+
+  * ###### Open Analytics Framework (OpenAF)
+    * UserEnv Class.
+      * Properties:
+        * `models` - Supports listing of models installed from external model registry like HuggingFace  as well.
+      * Methods:
+        * `install_model()` - Added new arguments `model_name`, `model_type` and `api_key` to support installation of models from external model registry like HuggingFace .
+        * `uninstall_model()` - Supports uninstallation of a model from user environment which is installed from external model registry like HuggingFace .
+
+* ##### Bug Fixes
+  * `set_auth_token()` generates JWT token using default value for iat claim when authentication is being done using PEM file and PAT.
+  * `create_env` - When an unavailable R base environment is provided in `create_env()`, requested R user environment is created using latest R base environment version
+  out of available base environments. Earlier, `create_env()` would create user environment with latest Python base environment version even though the request is for R user environment.
+  * Fixed userWarning in `db_list_tables()`.
+
 #### teradataml 20.00.00.06
 * ##### New Features/Functionality
   * ###### teradataml: SDK
