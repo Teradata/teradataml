@@ -59,6 +59,22 @@ Copyright 2025, Teradata. All Rights Reserved.
     - ##### Regression__Insurance_Charges_Prediction.ipynb
       - Custom json : custom_insurance.json
 
+* #### AutoChurn Notebooks
+    - ##### Bank_Customer_Churn_Prediction_Deploy_Models.ipynb
+    - ##### Bank_Customer_Churn_Prediction_Load_Models.ipynb
+
+* #### AutoCluster Notebooks
+    - ##### Auto Run Notebooks
+      - ##### Iris_data_Clustering.ipynb
+      - ##### Mall_customer_Clustering.ipynb
+    - ##### Custom Run Notebook with corresponding json
+      - ##### Mall_customer_Clustering.ipynb
+        - Custom json : custom_clustering_file.json
+
+* #### AutoFraud Notebooks
+    - ##### Online_Payment_Fraud_Detection_Deploy_Models.ipynb
+    - ##### Online_Payment_Fraud_Detection_Load_Models.ipynb
+
 ## Documentation
 
 General product information, including installation instructions, is available in the [Teradata Documentation website](https://docs.teradata.com/search/documents?query=package+python+-lake&filters=category~%2522Programming+Reference%2522_%2522User+Guide%2522*prodname~%2522Teradata+Package+for+Python%2522_%2522Teradata+Python+Package%2522&sort=last_update&virtual-field=title_only&content-lang=)
