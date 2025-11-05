@@ -17,6 +17,29 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+## Release Notes:
+#### teradataml 20.00.00.08
+* ##### New Features/Functionality
+  * Extending compatibility for IBM PowerPC with python >=3.9. Refer Teradata Python Package User Guide for more details related to installation on IBM PowerPC.
+
+  * ###### teradataml: AutoML
+    * New methods added for `AutoML()`, `AutoRegressor()`, `AutoClassifier()`, `AutoFraud()`, `AutoChurn()` and `AutoCluster()`.
+      * `get_transformed_data()` - Returns the transformed data obtained from all feature selection methods for given input data.
+      * `get_raw_data_with_id()` - Returns the raw input data along with the ID column mapping.
+      * `get_error_logs()` - Returns the error logs for failed models generated during execution of AutoML.
+
+* ##### Updates
+  * ###### teradataml: AutoML
+      * New argument added for `AutoML()`, `AutoRegressor()`, `AutoClassifier()`, `AutoFraud()`, `AutoChurn()` and `AutoDataPrep()`.
+        * Added `enable_lasso` to use lasso based feature selection during data preparation. By default, only 'RFE' and 'PCA' are enabled for feature selection.
+      * New arguments added for `AutoML()`, `AutoRegressor()`, `AutoClassifier()`, `AutoFraud()`, `AutoChurn()` and `AutoCluster()`.
+        * Added `id_column` to specify the ID column present in input data. By default, an AutoML-generated ID column `automl_id` is enabled for processing if user does not provide one.
+        * Added `raise_errors` to control whether non-blocking issues raise errors or only warnings. By default, it does not raise errors and continues processing with a user warning.
+        * Added `preserve_columns` to `predict()` to preserve columns from the transformed data in prediction DataFrame.
+
+* ##### Bug Fixes
+  * CS3096238 - Teradata BYOM will now work with Secure Zone--CHBIT08
+
 #### teradataml 20.00.00.07
 * ##### New Features/Functionality
   * ###### teradataml: DataFrame
