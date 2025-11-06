@@ -2666,7 +2666,7 @@ The following ML Engine (`teradataml.analytics.mle`) functions have new and/or u
 ## Installation and Requirements
 
 ### Package Requirements:
-* Python 3.5 or later
+* Python 3.8 or later
 
 Note: 32-bit Python is not supported.
 
