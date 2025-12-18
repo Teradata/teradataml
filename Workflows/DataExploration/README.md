@@ -11,6 +11,7 @@ Copyright 2025, Teradata. All Rights Reserved.
 ## Following workflows in the form of Jupyter notebooks are provided:
     Data_Exploration_Cleaning.ipynb
     Date_and_Time_functions.ipynb
+    Array_functions.ipynb
 
 ## Documentation
 

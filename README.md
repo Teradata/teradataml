@@ -17,7 +17,139 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
-## Release Notes:
+#### teradataml 20.00.00.09
+* ##### Optional Dependency Installation (Footprint Reduction Update)
+  * As part of ongoing **footprint reduction and modularization**, the following optional components are **no longer installed by default** when installing `teradataml`. If users require functionality related to these components, they must install the corresponding optional dependencies manually.
+
+  * ###### Optional Features and Their Dependencies
+    | Feature | Required Packages |
+    |--------|-------------------|
+    | **AutoML Family Functions** | `imbalanced-learn`, `scikit-learn` |
+    | **OpenSourceML** | `scikit-learn`, `lightgbm` |
+    | **Visualization** | `matplotlib`, `seaborn` |
+    | **Teradataml EDA UI** | `teradatamlwidgets` |
+
+  * ###### Installing Optional Dependencies
+    * Users can install any optional feature using:
+      ```pip install teradataml[<feature_name>]```
+ 
+      Where `<feature_name>` can be one of:
+        * `automl` – Installs dependencies for AutoML capabilities
+        * `openml` – Installs dependencies for OpenSourceML features
+        * `visualization` – Installs visualization libraries
+        * `eda-ui` – Installs UI components for EDA workflows
+
+      * ###### Examples
+        * Install OpenSourceML dependencies \
+          `pip install teradataml[openml]`
+
+        * Install AutoML dependencies \
+          `pip install teradataml[automl]`
+
+        * Install visualization dependencies \
+          `pip install teradataml[visualization]`
+        
+        * Install Teradataml EDA UI dependencies \
+          `pip install teradataml[eda-ui]`
+
+* ##### New Features/Functionality
+  * ###### Array Functionality - teradataml now supports creating array columns for DataFrame(s).
+    * ###### teradataml: Array
+      * `array()` - Creates an object of Array.
+
+    * ###### teradataml: DataFrame
+      * `DataFrame.unnest()` - Explodes an array column into multiple rows.
+
+    * ###### teradataml: DataFrameColumn (ColumnExpression) – Array Operations
+      * ###### Comparisons
+        * `array_gt()` - Checks if array elements are greater than another array or a scalar value.
+        * `array_ge()` - Checks if array elements are greater than or equal to another array or a scalar value.
+        * `array_lt()` - Checks if array elements are less than another array or a scalar value.
+        * `array_le()` - Checks if array elements are less than or equal to another array or a scalar value.
+        * `array_eq()` - Checks if array elements are equal to another array or a scalar value.
+        * `array_ne()` - Checks if array elements are not equal to another array or a scalar value.
+        * `array_compare()` - Compares the elements of the array with another array.
+
+      * ###### Arithmetic Operations
+        * `array_add()` - Element-wise addition with another array or a scalar value.
+        * `array_sub()` - Element-wise subtraction with another array or a scalar value.
+        * `array_mul()` - Element-wise multiplication with another array or a scalar value.
+        * `array_mod()` - Element-wise modulus with another array or a scalar value.
+        * `array_div()` - Element-wise division with another array or a scalar value.
+
+      * ###### Aggregations
+        * `array_sum()` - Computes the sum of array elements.
+        * `array_avg()` - Computes the average of array elements.
+        * `array_max()` - Returns the maximum value in the array.
+        * `array_min()` - Returns the minimum value in the array.
+        * `array_count_distinct()` - Counts distinct elements in the array.
+        * `array_agg()` - Aggregates the rows of a column into an array.
+
+      * ###### Array Updates & Transformations
+        * `array_update()` - Updates the element at a specific index or a range.
+        * `array_concat()` - Concatenates two arrays into a single array.
+        * `array_append()` - Appends an element to the end of an array.
+        * `array_prepend()` - Prepends an element to the beginning of an array.
+        * `array_contains()` - Checks if an array contains a specific element.
+        * `array_insert()` - Inserts an element at a specific index.
+        * `array_remove()` - Removes all occurrences of a specified element.
+        * `array_trim()` - Trims elements from the end of the array.
+        * `array_sort()` - Sorts the elements of an array.
+        * `array_join()` - Joins array elements into a delimited string.
+        * `array_distinct()` - Removes duplicate elements from an array.
+        * `array_compact()` - Removes null elements from an array.
+        * `array_reverse()` - Reverses the order of elements in an array.
+        * `array_repeat()` - Creates an array by repeating a value a specified number of times.
+        * `extend()` - Extends the space for new elements in an array.
+
+      * ###### Array Set Operations
+        * `array_overlap()` - Checks if two arrays have any common elements.
+        * `array_intersect()` - Returns the intersection of two arrays.
+        * `array_union()` - Returns the union of two arrays with distinct elements.
+        * `array_except()` - Returns the elements of the first array that are not in the second array.
+
+      * ###### Indexing & Position
+        * `get()` - Gets the element at a specific index in an array.
+        * `element_state()` - Checks if the element at a specific index in an array is initialized or uninitialized.
+        * `array_position()` - Gets the position of an element in the array.
+        * `slice()` - Returns the subset of an array based on specified start index and length.
+        * `shuffle()` - Shuffles the elements of the array randomly.
+
+      * ###### Array Properties
+        * `array_size()` - Returns the size of an array.
+        * `total_initialized_elements()` - Returns the number of initialized elements in an array.
+        * `limit()` - Returns the highest possible index in the array.
+        * `first_index()` - Returns the lowest index in the array.
+        * `last_index()` - Returns the highest index in the array.
+        * `prior()` - Returns the index preceding a given index in the array.
+        * `next()` - Returns the index following a given index in the array.
+
+  * ###### teradataml: SQLE Engine Analytic Functions
+    * New analytic functions added to support HNSW–based vector search:
+      * `HNSW()`
+      * `HNSWPredict()`
+      * `HNSWSummary()`
+
+  * ###### teradataml: Functions
+    * `sequence()` - Generates an array of numbers from start to stop with given step.
+    * `make_interval()` - Converts a numeric value or column to the interval type.
+
+* ##### Updates and Enhancements
+  * ###### teradataml: DataFrame function
+    * `DataFrame.assign()` now supports assigning Array objects as values.
+    * `head()` and `tail()` 
+      * Improved performance.
+      * Added a new argument `deterministic` to control whether results return the first *n* rows sorted or a random sample.
+
+  * ###### General functions
+    * `copy_to_sql()` now supports loading array columns from both pandas DataFrames and teradataml DataFrames.
+
+  * ###### Enterprise Feature Store
+    * `apply()` - Added new argument `replace` to update existing objects in FeatureStore.
+
+* ##### Bug Fixes
+  * `td_lightgbm` is now fully compatible with **SLES15**.
+
 #### teradataml 20.00.00.08
 * ##### New Features/Functionality
   * Extending compatibility for IBM PowerPC with python >=3.9. Refer Teradata Python Package User Guide for more details related to installation on IBM PowerPC.
