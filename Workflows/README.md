@@ -21,6 +21,7 @@ Copyright 2025, Teradata. All Rights Reserved.
 #### DataExploration - contains workflows for various teradataml dataframe methods 
     Data Exploration and Cleaning - Data_Exploration_Cleaning.ipynb
     Date and Time functions - Date_and_Time_functions.ipynb
+    Array functions - Array_functions.ipynb
 
 #### DataTransferUtilities - contains workflows for moving data between teradata database and various external sources
     Exporting the data outside vantage - Data_export_APIs.ipynb
