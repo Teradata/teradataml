@@ -23,7 +23,8 @@ Copyright 2025, Teradata. All Rights Reserved.
 * #### Auto Run Notebooks
     - ##### Binary_Classification__Bank_Churn_Prediction.ipynb
     - ##### Binary_Classification__Bank_Marketing_Outcome_Prediction.ipynb
-    - ##### Binary_Classification__Breast_Cancer_Prediction.ipynb
+    - ##### Binary_Classification__Breast_Cancer_Prediction_with_ID_Deploy_Models.ipynb
+    - ##### Binary_Classification__Breast_Cancer_Prediction_with_ID_Load_Models.ipynb
     - ##### Binary_Classification__Titanic_Survival_Prediction_Deploy_Models.ipynb
     - ##### Binary_Classification__Titanic_Survival_Prediction_Load_Models.ipynb
     - ##### Binary_Classification__Wine_Quality_Prediction.ipynb
@@ -34,7 +35,8 @@ Copyright 2025, Teradata. All Rights Reserved.
     - ##### Regression__Advertisment_Sales_Prediction_Deploy_Models.ipynb
     - ##### Regression__Advertisment_Sales_Prediction_Load_Models.ipynb
     - ##### Regression__Bike_Sharing_Demand_Prediction.ipynb
-    - ##### Regression__Fish_Weight_Prediction.ipynb
+    - ##### Regression__Fish_Weight_Prediction_with_default_ID_deploy_models.ipynb
+    - ##### Regression__Fish_Weight_Prediction_with_default_ID_load_models.ipynb
     - ##### Regression__House_Price_Prediction.ipynb
     - ##### Regression__Insurance_Charges_Prediction.ipynb
     
@@ -74,6 +76,12 @@ Copyright 2025, Teradata. All Rights Reserved.
 * #### AutoFraud Notebooks
     - ##### Online_Payment_Fraud_Detection_Deploy_Models.ipynb
     - ##### Online_Payment_Fraud_Detection_Load_Models.ipynb
+
+* #### AutoDataPrep Notebooks
+    - ##### Binary_Classification__Titanic_Survival_Deploy_Data.ipynb
+    - ##### Binary_Classification__Titanic_Survival_Load_Data.ipynb
+    - ##### Regression__Fish_Weight_Deploy_Data.ipynb
+    - ##### Regression__Fish_Weight_Load_Data.ipynb
 
 ## Documentation
 
