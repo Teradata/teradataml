@@ -17,6 +17,13 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+#### teradataml 20.00.00.10
+* ##### Updates
+  * set_auth_token returns object of the class instead of boolean value. Functionality remains same.
+
+* ##### Bug Fixes
+  * Garbage collection now works correctly with Teradata systems across both IPv4 and IPv6 deployments.
+
 #### teradataml 20.00.00.09
 * ##### Optional Dependency Installation (Footprint Reduction Update)
   * As part of ongoing **footprint reduction and modularization**, the following optional components are **no longer installed by default** when installing `teradataml`. If users require functionality related to these components, they must install the corresponding optional dependencies manually.
