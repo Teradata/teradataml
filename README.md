@@ -17,6 +17,59 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+#### teradataml 20.00.00.11
+* ##### New Features/Functionality
+  * ###### teradataml: AutoML
+    * load-deploy features added for `AutoCluster()`.
+      * `load()` - Loads the saved model from database.
+      * `deploy()` - Saves the trained model inside database.
+      * `remove_saved_models()` - Removes the saved model in database.
+
+  * ###### Enterprise Feature Store
+    * `FilterManager` - Manages filters for feature processing.
+      * Methods:
+        * `__init__()` - Instantiates an object of FilterManager.
+        * `load_filter()` - Loads filter definitions from a DataFrame into the filter manager.
+        * `update()` - Switches to a different filter scenario.
+        * `prune_filters()` - Removes filters with IDs lower than the specified filter ID.
+        * `clone_filter()` - Clones filters from another FilterManager.
+        * `get_current_filter()` - Retrieves the current filter.
+        * `list_filters()` - Lists all filters.
+        * `drop()` - Drops the `FilterManager` and its associated artifacts.
+      * Properties:
+        * `name` - Gets the name of the `FilterManager`.
+        * `table_name` - Gets the table name that stores filter definitions.
+        * `columns` - Gets the columns of the filter definition.
+        * `num_filters` - Gets the number of filters in the `FilterManager`.
+
+* ##### Updates
+  * ###### teradataml: AutoML
+    *  Added `enable_shap` to `predict()` to execute SHAP analysis during prediction.
+    *  Added `enable_rfe` and `enable_pca` to `AutoML()`, `AutoRegressor()`, `AutoClassifier()`, `AutoFraud()`, `AutoChurn()` and `AutoCluster()` to control RFE and PCA feature-selection during data preparation.
+    *  New argument `skip_phases` is added to skip selected phases during AutoML run.
+  
+  * ###### teradataml: General Functions
+    * `set_auth_token()`
+      * Added support for **OAuth 2.0 Device Code Grant** authentication flow, enabling secure token-based login on Teradata systems configured with **PING** or **KEYCLOAK** Identity Providers (IDPs). This flow is especially useful for environments where browser-based interactive login is required or where client credentials are not directly available.
+
+  * ###### Enterprise Feature Store
+    * New arguments added to `FeatureProcess.run()` and `FeatureCatalog.upload_features()`
+      * `filter_manager` - Accepts a `FilterManager` object to apply filters while ingesting feature values.
+      * `resume` - Specifies whether to resume a previously interrupted feature process run using `FilterManager`.
+    * New methods added to `FeatureStore` class to manage `FilterManager`.
+      * `list_filter_managers()` - Lists all the `FilterManager` in the repo.
+      * `get_filter_manager()` - Gets a specific `FilterManager` from the repo.
+      * `delete_filter_manager()` - Deletes a specific `FilterManager` from the repo.
+
+  * ###### Hyper Parameter Tuner
+    * Cross-validation support has been added to the Hyper Parameter Tuner.
+      * `fit()` - Added `cv_method` argument to control cross-validation. Supports
+        - `'kfold'` — K-Fold CV uses `cv_folds` argument for number of folds. 
+        - `'montecarlo'` — Monte Carlo CV uses `mc_iterations` argument for number of iterations and `mc_test_size` argument for test data size.
+
+* ##### Bug Fixes
+  * Fixed `UnboundLocalError` in Garbage collection that masked root cause exceptions when cleanup code failed.
+
 #### teradataml 20.00.00.10
 * ##### Updates
   * set_auth_token returns object of the class instead of boolean value. Functionality remains same.
