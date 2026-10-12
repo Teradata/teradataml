@@ -17,6 +17,59 @@ Copyright 2025, Teradata. All Rights Reserved.
 
 ## Release Notes:
 
+#### teradataml 20.00.00.12
+* ##### New Features/Functionality
+  * ###### teradataml: Multi-Context Support
+    * `create_context()` now lets users to work with multiple Teradata Vantage systems in the same Python session, with each context maintaining its own connection and configuration.
+    * With multi-context support, users can:
+      * Connect to multiple Vantage instances simultaneously without switching configurations.
+      * Maintain each connection's settings isolated from each other.
+      * Execute teradataml operations independently across multiple Vantage instances
+      * Use context objects directly, such as `ctx.DataFrame()`, `ctx.copy_to_sql()`, `ctx.execute_sql()`.
+      * Access multi-context support across all teradataml functionality.
+      * Each context is independent and its reference can be stored in a variable for easy reuse throughout your code.
+      
+    **Example usage:**
+
+    ```python
+    from teradataml import create_context
+
+    # Create two independent contexts to two different Vantage systems.
+    >>> ctx1 = create_context(host = 'hostname1', username = 'user1', password = 'password1')
+    >>> ctx2 = create_context(host = 'hostname2', username = 'user2', password = 'password2')
+
+    # Run teradataml operations using the first context
+    >>> ctx1.load_example_data("dataframe", "admissions_train")
+    >>> df1 = ctx1.DataFrame("admissions_train")
+    >>> df1.head()
+
+    # Run teradataml operations using the second context
+    >>> ctx2.load_example_data("teradataml", "titanic")
+    >>> df2 = ctx2.DataFrame("titanic")
+    >>> df2.head()
+
+    # Other teradataml APIs can also be invoked through the corresponding context.
+    ctx1.execute_sql("SELECT * FROM admissions_train")
+    ctx2.execute_sql("SELECT * FROM titanic")
+
+    # Remove each context independently when done.
+    >>> ctx1.remove_context()
+    >>> ctx2.remove_context()
+    ```
+
+* ##### Updates
+  * ###### teradataml: Context Creation
+    * `create_context()`
+      * When connected to a Compute Engine (CE), by default sets `configure.temp_object_type` to "VT" to ensure temporary objects are created as volatile tables.
+
+  * ###### teradataml: General Functions
+    * `set_auth_token()`
+      * Added `logmech` argument to specify the database logon mechanism (e.g. `"LDAP"`) to use for Basic Authentication.
+
+* ##### Bug Fixes
+  * `DataFrame.sample()` now raises an error when `frac` is a two-element list and `stratify_column` is specified but the fractions do not sum to `1.0`.
+  * AutoML, OpenSourceML and grant/revoke operations now escape special characters in database and object names.
+
 #### teradataml 20.00.00.11
 * ##### New Features/Functionality
   * ###### teradataml: AutoML
